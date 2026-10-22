@@ -1,0 +1,15 @@
+C:\source\Hệ Thống quản lý Bảo Trì và Bảo Hành Thiết Bị\src\MaintenanceWarrantySystem.Application\bin\Debug\net9.0\MaintenanceWarrantySystem.Application.deps.json
+C:\source\Hệ Thống quản lý Bảo Trì và Bảo Hành Thiết Bị\src\MaintenanceWarrantySystem.Application\bin\Debug\net9.0\MaintenanceWarrantySystem.Application.dll
+C:\source\Hệ Thống quản lý Bảo Trì và Bảo Hành Thiết Bị\src\MaintenanceWarrantySystem.Application\bin\Debug\net9.0\MaintenanceWarrantySystem.Application.pdb
+C:\source\Hệ Thống quản lý Bảo Trì và Bảo Hành Thiết Bị\src\MaintenanceWarrantySystem.Application\bin\Debug\net9.0\MaintenanceWarrantySystem.Domain.dll
+C:\source\Hệ Thống quản lý Bảo Trì và Bảo Hành Thiết Bị\src\MaintenanceWarrantySystem.Application\bin\Debug\net9.0\MaintenanceWarrantySystem.Domain.pdb
+C:\source\Hệ Thống quản lý Bảo Trì và Bảo Hành Thiết Bị\src\MaintenanceWarrantySystem.Application\obj\Debug\net9.0\MaintenanceWarrantySystem.Application.csproj.AssemblyReference.cache
+C:\source\Hệ Thống quản lý Bảo Trì và Bảo Hành Thiết Bị\src\MaintenanceWarrantySystem.Application\obj\Debug\net9.0\MaintenanceWarrantySystem.Application.GeneratedMSBuildEditorConfig.editorconfig
+C:\source\Hệ Thống quản lý Bảo Trì và Bảo Hành Thiết Bị\src\MaintenanceWarrantySystem.Application\obj\Debug\net9.0\MaintenanceWarrantySystem.Application.AssemblyInfoInputs.cache
+C:\source\Hệ Thống quản lý Bảo Trì và Bảo Hành Thiết Bị\src\MaintenanceWarrantySystem.Application\obj\Debug\net9.0\MaintenanceWarrantySystem.Application.AssemblyInfo.cs
+C:\source\Hệ Thống quản lý Bảo Trì và Bảo Hành Thiết Bị\src\MaintenanceWarrantySystem.Application\obj\Debug\net9.0\MaintenanceWarrantySystem.Application.csproj.CoreCompileInputs.cache
+C:\source\Hệ Thống quản lý Bảo Trì và Bảo Hành Thiết Bị\src\MaintenanceWarrantySystem.Application\obj\Debug\net9.0\Maintena.8D0497A8.Up2Date
+C:\source\Hệ Thống quản lý Bảo Trì và Bảo Hành Thiết Bị\src\MaintenanceWarrantySystem.Application\obj\Debug\net9.0\MaintenanceWarrantySystem.Application.dll
+C:\source\Hệ Thống quản lý Bảo Trì và Bảo Hành Thiết Bị\src\MaintenanceWarrantySystem.Application\obj\Debug\net9.0\refint\MaintenanceWarrantySystem.Application.dll
+C:\source\Hệ Thống quản lý Bảo Trì và Bảo Hành Thiết Bị\src\MaintenanceWarrantySystem.Application\obj\Debug\net9.0\MaintenanceWarrantySystem.Application.pdb
+C:\source\Hệ Thống quản lý Bảo Trì và Bảo Hành Thiết Bị\src\MaintenanceWarrantySystem.Application\obj\Debug\net9.0\ref\MaintenanceWarrantySystem.Application.dll

@@ -1,0 +1,8 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/MaintenanceWarrantySystem.Api/MaintenanceWarrantySystem.Api.csproj" />
+    <Project Path="src/MaintenanceWarrantySystem.Application/MaintenanceWarrantySystem.Application.csproj" />
+    <Project Path="src/MaintenanceWarrantySystem.Domain/MaintenanceWarrantySystem.Domain.csproj" />
+    <Project Path="src/MaintenanceWarrantySystem.Infrastructure/MaintenanceWarrantySystem.Infrastructure.csproj" />
+  </Folder>
+</Solution>

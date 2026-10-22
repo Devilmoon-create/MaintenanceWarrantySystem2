@@ -1,0 +1,57 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "startLocalDB",
+            "type": "shell",
+            "command": "sqllocaldb start MSSQLLocalDB",
+            "problemMatcher": [],
+            "detail": "Starts SQL Server LocalDB instance"
+        },
+        {
+            "label": "build",
+            "type": "process",
+            "command": "dotnet",
+            "args": [
+                "build",
+                "${workspaceFolder}/src/MaintenanceWarrantySystem.Api/MaintenanceWarrantySystem.Api.csproj",
+                "/property:GenerateFullPaths=true",
+                "/consoleloggerparameters:NoSummary"
+            ],
+            "problemMatcher": "$msCompile",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "detail": "Builds the .NET API project"
+        },
+        {
+            "label": "build:all",
+            "type": "process",
+            "command": "dotnet",
+            "args": [
+                "build",
+                "${workspaceFolder}/MaintenanceWarrantySystem.slnx",
+                "/property:GenerateFullPaths=true",
+                "/consoleloggerparameters:NoSummary"
+            ],
+            "problemMatcher": "$msCompile",
+            "group": "build",
+            "detail": "Builds the entire solution"
+        },
+        {
+            "label": "run",
+            "type": "process",
+            "command": "dotnet",
+            "args": [
+                "run",
+                "--launch-profile",
+                "API",
+                "--project",
+                "${workspaceFolder}/src/MaintenanceWarrantySystem.Api/MaintenanceWarrantySystem.Api.csproj"
+            ],
+            "problemMatcher": [],
+            "detail": "Runs the API on http://localhost:5193"
+        }
+    ]
+}

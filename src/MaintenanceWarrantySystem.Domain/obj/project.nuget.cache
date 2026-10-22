@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "dgSpecHash": "ISjXBK3HFFo=",
+  "success": true,
+  "projectFilePath": "C:\\source\\Hệ Thống quản lý Bảo Trì và Bảo Hành Thiết Bị\\src\\MaintenanceWarrantySystem.Domain\\MaintenanceWarrantySystem.Domain.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\GIGABYTE\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\9.0.21\\microsoft.windowsdesktop.app.ref.9.0.21.nupkg.sha512",
+    "C:\\Users\\GIGABYTE\\.nuget\\packages\\microsoft.netcore.app.ref\\9.0.21\\microsoft.netcore.app.ref.9.0.21.nupkg.sha512",
+    "C:\\Users\\GIGABYTE\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\9.0.21\\microsoft.aspnetcore.app.ref.9.0.21.nupkg.sha512"
+  ],
+  "logs": []
+}

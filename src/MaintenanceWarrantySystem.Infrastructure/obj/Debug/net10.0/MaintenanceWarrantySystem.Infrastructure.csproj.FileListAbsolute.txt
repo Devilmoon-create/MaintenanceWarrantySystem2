@@ -1,0 +1,17 @@
+C:\source\Hệ Thống quản lý Bảo Trì và Bảo Hành Thiết Bị\src\MaintenanceWarrantySystem.Infrastructure\bin\Debug\net10.0\MaintenanceWarrantySystem.Infrastructure.deps.json
+C:\source\Hệ Thống quản lý Bảo Trì và Bảo Hành Thiết Bị\src\MaintenanceWarrantySystem.Infrastructure\bin\Debug\net10.0\MaintenanceWarrantySystem.Infrastructure.dll
+C:\source\Hệ Thống quản lý Bảo Trì và Bảo Hành Thiết Bị\src\MaintenanceWarrantySystem.Infrastructure\bin\Debug\net10.0\MaintenanceWarrantySystem.Infrastructure.pdb
+C:\source\Hệ Thống quản lý Bảo Trì và Bảo Hành Thiết Bị\src\MaintenanceWarrantySystem.Infrastructure\bin\Debug\net10.0\MaintenanceWarrantySystem.Application.dll
+C:\source\Hệ Thống quản lý Bảo Trì và Bảo Hành Thiết Bị\src\MaintenanceWarrantySystem.Infrastructure\bin\Debug\net10.0\MaintenanceWarrantySystem.Domain.dll
+C:\source\Hệ Thống quản lý Bảo Trì và Bảo Hành Thiết Bị\src\MaintenanceWarrantySystem.Infrastructure\bin\Debug\net10.0\MaintenanceWarrantySystem.Application.pdb
+C:\source\Hệ Thống quản lý Bảo Trì và Bảo Hành Thiết Bị\src\MaintenanceWarrantySystem.Infrastructure\bin\Debug\net10.0\MaintenanceWarrantySystem.Domain.pdb
+C:\source\Hệ Thống quản lý Bảo Trì và Bảo Hành Thiết Bị\src\MaintenanceWarrantySystem.Infrastructure\obj\Debug\net10.0\MaintenanceWarrantySystem.Infrastructure.csproj.AssemblyReference.cache
+C:\source\Hệ Thống quản lý Bảo Trì và Bảo Hành Thiết Bị\src\MaintenanceWarrantySystem.Infrastructure\obj\Debug\net10.0\MaintenanceWarrantySystem.Infrastructure.GeneratedMSBuildEditorConfig.editorconfig
+C:\source\Hệ Thống quản lý Bảo Trì và Bảo Hành Thiết Bị\src\MaintenanceWarrantySystem.Infrastructure\obj\Debug\net10.0\MaintenanceWarrantySystem.Infrastructure.AssemblyInfoInputs.cache
+C:\source\Hệ Thống quản lý Bảo Trì và Bảo Hành Thiết Bị\src\MaintenanceWarrantySystem.Infrastructure\obj\Debug\net10.0\MaintenanceWarrantySystem.Infrastructure.AssemblyInfo.cs
+C:\source\Hệ Thống quản lý Bảo Trì và Bảo Hành Thiết Bị\src\MaintenanceWarrantySystem.Infrastructure\obj\Debug\net10.0\MaintenanceWarrantySystem.Infrastructure.csproj.CoreCompileInputs.cache
+C:\source\Hệ Thống quản lý Bảo Trì và Bảo Hành Thiết Bị\src\MaintenanceWarrantySystem.Infrastructure\obj\Debug\net10.0\Maintena.43218AA5.Up2Date
+C:\source\Hệ Thống quản lý Bảo Trì và Bảo Hành Thiết Bị\src\MaintenanceWarrantySystem.Infrastructure\obj\Debug\net10.0\MaintenanceWarrantySystem.Infrastructure.dll
+C:\source\Hệ Thống quản lý Bảo Trì và Bảo Hành Thiết Bị\src\MaintenanceWarrantySystem.Infrastructure\obj\Debug\net10.0\refint\MaintenanceWarrantySystem.Infrastructure.dll
+C:\source\Hệ Thống quản lý Bảo Trì và Bảo Hành Thiết Bị\src\MaintenanceWarrantySystem.Infrastructure\obj\Debug\net10.0\MaintenanceWarrantySystem.Infrastructure.pdb
+C:\source\Hệ Thống quản lý Bảo Trì và Bảo Hành Thiết Bị\src\MaintenanceWarrantySystem.Infrastructure\obj\Debug\net10.0\ref\MaintenanceWarrantySystem.Infrastructure.dll

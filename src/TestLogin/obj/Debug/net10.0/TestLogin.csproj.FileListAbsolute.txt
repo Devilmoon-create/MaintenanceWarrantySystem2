@@ -1,0 +1,14 @@
+C:\source\Hệ Thống quản lý Bảo Trì và Bảo Hành Thiết Bị\src\TestLogin\bin\Debug\net10.0\TestLogin.exe
+C:\source\Hệ Thống quản lý Bảo Trì và Bảo Hành Thiết Bị\src\TestLogin\bin\Debug\net10.0\TestLogin.deps.json
+C:\source\Hệ Thống quản lý Bảo Trì và Bảo Hành Thiết Bị\src\TestLogin\bin\Debug\net10.0\TestLogin.runtimeconfig.json
+C:\source\Hệ Thống quản lý Bảo Trì và Bảo Hành Thiết Bị\src\TestLogin\bin\Debug\net10.0\TestLogin.dll
+C:\source\Hệ Thống quản lý Bảo Trì và Bảo Hành Thiết Bị\src\TestLogin\bin\Debug\net10.0\TestLogin.pdb
+C:\source\Hệ Thống quản lý Bảo Trì và Bảo Hành Thiết Bị\src\TestLogin\obj\Debug\net10.0\TestLogin.GeneratedMSBuildEditorConfig.editorconfig
+C:\source\Hệ Thống quản lý Bảo Trì và Bảo Hành Thiết Bị\src\TestLogin\obj\Debug\net10.0\TestLogin.AssemblyInfoInputs.cache
+C:\source\Hệ Thống quản lý Bảo Trì và Bảo Hành Thiết Bị\src\TestLogin\obj\Debug\net10.0\TestLogin.AssemblyInfo.cs
+C:\source\Hệ Thống quản lý Bảo Trì và Bảo Hành Thiết Bị\src\TestLogin\obj\Debug\net10.0\TestLogin.csproj.CoreCompileInputs.cache
+C:\source\Hệ Thống quản lý Bảo Trì và Bảo Hành Thiết Bị\src\TestLogin\obj\Debug\net10.0\TestLogin.dll
+C:\source\Hệ Thống quản lý Bảo Trì và Bảo Hành Thiết Bị\src\TestLogin\obj\Debug\net10.0\refint\TestLogin.dll
+C:\source\Hệ Thống quản lý Bảo Trì và Bảo Hành Thiết Bị\src\TestLogin\obj\Debug\net10.0\TestLogin.pdb
+C:\source\Hệ Thống quản lý Bảo Trì và Bảo Hành Thiết Bị\src\TestLogin\obj\Debug\net10.0\TestLogin.genruntimeconfig.cache
+C:\source\Hệ Thống quản lý Bảo Trì và Bảo Hành Thiết Bị\src\TestLogin\obj\Debug\net10.0\ref\TestLogin.dll

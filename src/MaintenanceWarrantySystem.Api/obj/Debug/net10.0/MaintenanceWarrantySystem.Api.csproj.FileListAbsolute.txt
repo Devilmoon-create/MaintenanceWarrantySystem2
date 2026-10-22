@@ -1,0 +1,8 @@
+C:\source\Hệ Thống quản lý Bảo Trì và Bảo Hành Thiết Bị\src\MaintenanceWarrantySystem.Api\obj\Debug\net10.0\MaintenanceWarrantySystem.Api.csproj.AssemblyReference.cache
+C:\source\Hệ Thống quản lý Bảo Trì và Bảo Hành Thiết Bị\src\MaintenanceWarrantySystem.Api\obj\Debug\net10.0\rpswa.dswa.cache.json
+C:\source\Hệ Thống quản lý Bảo Trì và Bảo Hành Thiết Bị\src\MaintenanceWarrantySystem.Api\obj\Debug\net10.0\MaintenanceWarrantySystem.Api.GeneratedMSBuildEditorConfig.editorconfig
+C:\source\Hệ Thống quản lý Bảo Trì và Bảo Hành Thiết Bị\src\MaintenanceWarrantySystem.Api\obj\Debug\net10.0\MaintenanceWarrantySystem.Api.AssemblyInfoInputs.cache
+C:\source\Hệ Thống quản lý Bảo Trì và Bảo Hành Thiết Bị\src\MaintenanceWarrantySystem.Api\obj\Debug\net10.0\MaintenanceWarrantySystem.Api.AssemblyInfo.cs
+C:\source\Hệ Thống quản lý Bảo Trì và Bảo Hành Thiết Bị\src\MaintenanceWarrantySystem.Api\obj\Debug\net10.0\MaintenanceWarrantySystem.Api.csproj.CoreCompileInputs.cache
+C:\source\Hệ Thống quản lý Bảo Trì và Bảo Hành Thiết Bị\src\MaintenanceWarrantySystem.Api\obj\Debug\net10.0\MaintenanceWarrantySystem.Api.MvcApplicationPartsAssemblyInfo.cs
+C:\source\Hệ Thống quản lý Bảo Trì và Bảo Hành Thiết Bị\src\MaintenanceWarrantySystem.Api\obj\Debug\net10.0\MaintenanceWarrantySystem.Api.MvcApplicationPartsAssemblyInfo.cache
