@@ -41,8 +41,10 @@ export const useAuthStore = create<AuthState>()(
         const response = await authApi.login(username, password);
         const { accessToken, refreshToken, user } = response.data;
         
+        // Access token: localStorage (volatile)
         localStorage.setItem('accessToken', accessToken);
-        localStorage.setItem('refreshToken', refreshToken);
+        // Refresh token: HttpOnly cookie (secure, not accessible via JS)
+        document.cookie = `refreshToken=${refreshToken}; Path=/; Secure; SameSite=Strict; HttpOnly`;
         
         set({
           user,
@@ -54,7 +56,8 @@ export const useAuthStore = create<AuthState>()(
 
       logout: () => {
         localStorage.removeItem('accessToken');
-        localStorage.removeItem('refreshToken');
+        // Remove refresh token from document.cookie
+        document.cookie = 'refreshToken=; Path=/; Secure; SameSite=Strict; Expires=Thu, 01 Jan 1970 00:00:00 GMT';
         set({
           user: null,
           accessToken: null,
@@ -65,7 +68,8 @@ export const useAuthStore = create<AuthState>()(
 
       setTokens: (accessToken: string, refreshToken: string) => {
         localStorage.setItem('accessToken', accessToken);
-        localStorage.setItem('refreshToken', refreshToken);
+        // Refresh token: HttpOnly cookie (not accessible via JS)
+        document.cookie = `refreshToken=${refreshToken}; Path=/; Secure; SameSite=Strict; HttpOnly`;
         set({ accessToken, refreshToken });
       },
 
@@ -78,10 +82,15 @@ export const useAuthStore = create<AuthState>()(
       },
 
       checkAuth: async () => {
+        // Access token is in localStorage (volatile)
         const accessToken = localStorage.getItem('accessToken');
-        const refreshToken = localStorage.getItem('refreshToken');
+        // Refresh token is in HttpOnly cookie (not accessible via JS)
+        const refreshToken = document.cookie
+          .split('; ')
+          .find(row => row.startsWith('refreshToken='))
+          ?.split('=')[1];
         
-        if (accessToken && refreshToken) {
+        if (accessToken) {
           try {
             const response = await authApi.me();
             set({

@@ -104,3 +104,4 @@ C:\source\Hệ Thống quản lý Bảo Trì và Bảo Hành Thiết Bị\src\Ma
 C:\source\Hệ Thống quản lý Bảo Trì và Bảo Hành Thiết Bị\src\MaintenanceWarrantySystem.Api\obj\Debug\net9.0\MaintenanceWarrantySystem.Api.genruntimeconfig.cache
 C:\source\Hệ Thống quản lý Bảo Trì và Bảo Hành Thiết Bị\src\MaintenanceWarrantySystem.Api\obj\Debug\net9.0\ref\MaintenanceWarrantySystem.Api.dll
 C:\source\Hệ Thống quản lý Bảo Trì và Bảo Hành Thiết Bị\src\MaintenanceWarrantySystem.Api\obj\Debug\net9.0\staticwebassets.upToDateCheck.txt
+C:\source\Hệ Thống quản lý Bảo Trì và Bảo Hành Thiết Bị\src\MaintenanceWarrantySystem.Api\obj\Debug\net9.0\MaintenanceWarrantySystem.Api.sourcelink.json

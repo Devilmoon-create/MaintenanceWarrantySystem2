@@ -1,6 +1,7 @@
 using MaintenanceWarrantySystem.Application.DTOs;
 using MaintenanceWarrantySystem.Application.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace MaintenanceWarrantySystem.Api.Controllers;
 
@@ -73,7 +74,7 @@ public class WarrantyClaimsController : ControllerBase
             return BadRequest("ID không khớp");
 
         // Get userId from claims (in real app, from JWT)
-        var userId = 1; // TODO: Get from User.Identity
+        var userId = User.FindFirst("sub")?.Value ?? User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
         var claim = await _service.UpdateStatusAsync(dto, userId);
         return Ok(claim);
     }

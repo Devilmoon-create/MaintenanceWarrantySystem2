@@ -120,7 +120,7 @@ builder.Services.AddScoped<IAuthService, AuthService>();
 
 // JWT Authentication
 var jwtSettings = builder.Configuration.GetSection("JwtSettings");
-var secretKey = jwtSettings["SecretKey"] ?? "YourSuperSecretKeyThatIsAtLeast32CharactersLong!";
+var secretKey = jwtSettings["SecretKey"] ?? throw new InvalidOperationException("JWT SecretKey is required in appsettings.json");
 
 builder.Services.AddAuthentication(options =>
 {
@@ -147,9 +147,9 @@ builder.Services.AddAuthorization();
 // CORS
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowAll", policy =>
+    options.AddPolicy("AllowFrontend", policy =>
     {
-        policy.AllowAnyOrigin()
+        policy.WithOrigins("http://localhost:3000", "http://localhost:5193")
               .AllowAnyMethod()
               .AllowAnyHeader();
     });

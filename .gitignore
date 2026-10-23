@@ -1,0 +1,54 @@
+# Build results
+bin/
+obj/
+
+# Visual Studio cache
+.vs/
+*.user
+*.opt
+*.suo
+
+# Visual Studio cache (2)
+.idea/
+*.ntvs*
+*.log
+
+# Logs
+src/MaintenanceWarrantySystem.Api/logs/
+
+# Source link
+src/**/obj/Debug/**/*.sourcelink.json
+
+# Node_modules
+frontend/node_modules/
+
+# Published output
+publish/
+
+# Test results
+**/TestResults/
+**/coverage/
+
+# Environment files
+.env
+.env.local
+
+# Database
+*.mdf
+*.ldf
+
+# NuGet
+packages/
+
+# JetBrains
+.idea/
+*.iml
+
+# VS Code
+.vscode/settings.json
+.vscode/launch.json
+.vscode/tasks.json
+
+# LocalDB
+*.mdf
+*.ldf
