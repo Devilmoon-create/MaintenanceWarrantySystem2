@@ -74,7 +74,8 @@ public class WarrantyClaimsController : ControllerBase
             return BadRequest("ID không khớp");
 
         // Get userId from claims (in real app, from JWT)
-        var userId = User.FindFirst("sub")?.Value ?? User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        var userIdStr = User.FindFirst("sub")?.Value ?? User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        var userId = int.TryParse(userIdStr, out var parsedId) ? parsedId : 1;
         var claim = await _service.UpdateStatusAsync(dto, userId);
         return Ok(claim);
     }

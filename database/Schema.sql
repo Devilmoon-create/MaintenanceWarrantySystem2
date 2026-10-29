@@ -71,6 +71,19 @@ CREATE TABLE Devices (
     IsDeleted BIT NOT NULL DEFAULT 0
 );
 
+-- Categories Table
+CREATE TABLE Categories (
+    Id INT IDENTITY(1,1) PRIMARY KEY,
+    Code NVARCHAR(20) NOT NULL UNIQUE,
+    Name NVARCHAR(100) NOT NULL,
+    Description NVARCHAR(500),
+    DefaultWarrantyMonths INT NOT NULL DEFAULT 12,
+    MaintenanceCycleMonths INT NOT NULL DEFAULT 6,
+    CreatedAt DATETIME2 NOT NULL DEFAULT GETUTCDATE(),
+    UpdatedAt DATETIME2,
+    IsDeleted BIT NOT NULL DEFAULT 0
+);
+
 -- MaintenanceRequests Table
 CREATE TABLE MaintenanceRequests (
     Id INT IDENTITY(1,1) PRIMARY KEY,
@@ -172,3 +185,34 @@ CREATE INDEX IX_WarrantyClaimHistories_ClaimId ON WarrantyClaimHistories(Warrant
 INSERT INTO Users (Username, Email, PasswordHash, FullName, Phone, Role, IsActive)
 VALUES ('admin', 'admin@maintenance.com', '\$2a\$11\$8K1p/a0dhrxiow8ZgZQxzuqVZG8KqZqZqZqZqZqZqZqZqZqZqZqZq', 'System Administrator', '0900000000', 1, 1);
 GO
+
+-- =============================================
+-- Seed Sample Data
+-- =============================================
+-- Run Seed.sql after running Schema.sql to populate sample data
+-- The seed script generates: 
+--   - 60 Categories
+--   - 200 Customers
+--   - ~1,800 Devices
+--   - ~2,000 Maintenance Requests
+--   - ~2,000 Warranty Claims
+--   - ~2,000 Device Maintenance Histories
+--   - ~2,000 Warranty Claim Histories
+--   Total: >= 10,000 records
+
+-- Available seed data:
+-- Categories (Code, Name, Description, DefaultWarrantyMonths, MaintenanceCycleMonths)
+-- Customers (Code, FullName, Phone, Email, Address, TaxCode, CompanyName, Type)
+-- Devices (Code, SerialNumber, Name, Model, Brand, Category, PurchaseDate, WarrantyExpiryDate, PurchasePrice, Specifications, Status, Location)
+-- MaintenanceRequests (RequestCode, Title, Description, Type, Priority, Status, RequestDate, ScheduledDate, EstimatedCost, ActualCost, DeviceId, CustomerId)
+-- WarrantyClaims (ClaimCode, Title, Description, DefectDescription, Type, Status, ClaimDate, ApprovedDate, ResolvedDate, ClaimAmount, ApprovedAmount, Resolution, RejectionReason, DeviceId, CustomerId)
+-- DeviceMaintenanceHistories (DeviceId, MaintenanceRequestId, ActionPerformed, PartsReplaced, Cost, PerformedAt, PerformedById, Notes)
+-- WarrantyClaimHistories (WarrantyClaimId, PreviousStatus, NewStatus, Comment, ChangedById, CreatedAt, UpdatedAt, IsDeleted)
+
+-- Notes:
+-- - Status values:
+--   1=Pending, 2=Approved, 3=Scheduled, 4=InProgress, 5=WaitingParts, 6=Completed, 7=Cancelled
+-- - Device Status values:
+--   1=Active, 2=UnderMaintenance, 3=UnderWarranty, 4=Retired, 5=Lost
+-- - WarrantyClaim Type values:
+--   1=Repair, 2=Replacement, 3=Refund

@@ -97,6 +97,7 @@ builder.Services.AddScoped<IWarrantyClaimRepository, WarrantyClaimRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IDeviceMaintenanceHistoryRepository, DeviceMaintenanceHistoryRepository>();
 builder.Services.AddScoped<IWarrantyClaimHistoryRepository, WarrantyClaimHistoryRepository>();
+builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 
 // Unit of Work
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
@@ -117,6 +118,7 @@ builder.Services.AddScoped<IDeviceService, DeviceService>();
 builder.Services.AddScoped<IMaintenanceRequestService, MaintenanceRequestService>();
 builder.Services.AddScoped<IWarrantyClaimService, WarrantyClaimService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<ICategoryService, CategoryService>();
 
 // JWT Authentication
 var jwtSettings = builder.Configuration.GetSection("JwtSettings");
@@ -149,9 +151,19 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowFrontend", policy =>
     {
-        policy.WithOrigins("http://localhost:3000", "http://localhost:5193")
+        policy.WithOrigins(
+                  "http://localhost:3000",
+                  "http://localhost:5193",
+                  "http://localhost:8080",
+                  "http://localhost:5500",
+                  "http://localhost:5501",
+                  "http://127.0.0.1:5500",
+                  "http://127.0.0.1:5501",
+                  "http://127.0.0.1:8080"
+              )
               .AllowAnyMethod()
-              .AllowAnyHeader();
+              .AllowAnyHeader()
+              .AllowCredentials();
     });
 });
 
@@ -172,11 +184,27 @@ else
     app.UseHttpsRedirection();
 }
 
-app.UseCors("AllowAll");
+app.UseCors("AllowFrontend");
 app.UseAuthentication();
 app.UseAuthorization();
 
+// Serve static web frontend
+var staticWebPath = Path.Combine(builder.Environment.ContentRootPath, "..", "..", "Web Hệ thống quán lý bảo trì và bảo hành Thiết bị");
+if (Directory.Exists(staticWebPath))
+{
+    app.UseStaticFiles(new StaticFileOptions
+    {
+        FileProvider = new Microsoft.Extensions.FileProviders.PhysicalFileProvider(
+            Path.GetFullPath(staticWebPath)),
+        RequestPath = "/app"
+    });
+    Log.Information("Static web served at /app from: {Path}", Path.GetFullPath(staticWebPath));
+}
+
 app.MapControllers();
+
+// Fallback: redirect root to static web
+app.MapGet("/", () => Results.Redirect("/app/login.html"));
 
 try
 {
