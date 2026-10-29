@@ -19,6 +19,12 @@ public class MappingProfile : Profile
         CreateMap<CreateDeviceDto, Device>();
         CreateMap<UpdateDeviceDto, Device>();
 
+        // Category
+        CreateMap<Category, CategoryDto>()
+            .ForMember(d => d.DeviceCount, opt => opt.MapFrom(s => s.Devices != null ? s.Devices.Count : 0));
+        CreateMap<CreateCategoryDto, Category>();
+        CreateMap<UpdateCategoryDto, Category>();
+
         // MaintenanceRequest
         CreateMap<MaintenanceRequest, MaintenanceRequestDto>()
             .ForMember(d => d.DeviceName, opt => opt.MapFrom(s => s.Device != null ? s.Device.Name : ""))

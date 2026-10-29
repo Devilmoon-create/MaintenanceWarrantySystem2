@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="vi" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Hệ thống quản lý Bảo Trì và Bảo Hành Thiết Bị - Dashboard tổng quan">
+  <meta name="keywords" content="bảo trì, bảo hành, thiết bị, quản lý, dashboard">
+  <title>Dashboard - Hệ thống Quản lý Bảo Trì & Bảo Hành</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔧</text></svg>">
+</head>
+<body data-page="dashboard" data-title="Dashboard">
+
+  <!-- Sidebar & Header được inject tự động bởi sidebar.js -->
+
+  <!-- Main Content -->
+  <main class="main-content" role="main">
+    <!-- Header được inject bởi sidebar.js -->
+
+    <!-- Page Content -->
+    <div class="page-content">
+
+      <!-- Stats Cards -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6" id="stats-container">
+        <!-- Rendered by JS -->
+      </div>
+
+      <!-- Charts Row -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+        <!-- Device Status Chart -->
+        <div class="card">
+          <div class="card-header">
+            <div>
+              <h2 class="card-title">Thiết bị theo trạng thái</h2>
+              <p class="card-subtitle">Phân bố trạng thái hoạt động</p>
+            </div>
+            <div class="tabs" role="tablist" aria-label="Chọn biểu đồ">
+              <button class="tab-btn active" role="tab" aria-selected="true" data-chart="device-pie">Tròn</button>
+              <button class="tab-btn" role="tab" aria-selected="false" data-chart="device-bar">Cột</button>
+            </div>
+          </div>
+          <div class="card-body">
+            <div style="height: 300px; position: relative;" id="device-chart-container">
+              <canvas id="deviceChart"></canvas>
+            </div>
+          </div>
+        </div>
+
+        <!-- Maintenance Trend Chart -->
+        <div class="card">
+          <div class="card-header">
+            <div>
+              <h2 class="card-title">Xu hướng dịch vụ 12 tháng</h2>
+              <p class="card-subtitle">Số lượng phiếu bảo trì/bảo hành theo tháng</p>
+            </div>
+            <select class="form-select" style="width: auto; min-width: 160px;" id="maintenance-chart-period">
+              <option value="12">12 tháng qua</option>
+              <option value="6">6 tháng qua</option>
+              <option value="24">24 tháng qua</option>
+            </select>
+          </div>
+          <div class="card-body">
+            <div style="height: 300px; position: relative;" id="maintenance-chart-container">
+              <canvas id="maintenanceChart"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Recent Activity & Alerts -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+        <!-- Recent Activity -->
+        <div class="card">
+          <div class="card-header">
+            <div>
+              <h2 class="card-title">Hoạt động gần đây</h2>
+              <p class="card-subtitle">10 hoạt động mới nhất</p>
+            </div>
+            <a href="service-invoices.html" class="btn btn-ghost btn-sm">Xem tất cả</a>
+          </div>
+          <div class="card-body" id="recent-activity-container">
+            <!-- Rendered by JS -->
+          </div>
+        </div>
+
+        <!-- Alerts -->
+        <div class="card">
+          <div class="card-header">
+            <div>
+              <h2 class="card-title">Cảnh báo & Thông báo</h2>
+              <p class="card-subtitle">Thiết bị sắp hết bảo hành, bảo trì quá hạn</p>
+            </div>
+            <span class="badge badge-warning" id="alert-count">0</span>
+          </div>
+          <div class="card-body" id="alerts-container">
+            <!-- Rendered by JS -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Actions - ánh xạ từ "Phần Quản lý Bán Hàng" -->
+      <div class="card">
+        <div class="card-header">
+          <h2 class="card-title">Thao tác nhanh</h2>
+          <p class="card-subtitle">Các chức năng thường dùng trong ngày</p>
+        </div>
+        <div class="card-body">
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-4">
+            <!-- Tương tự "Thêm hóa đơn" trong POS bán hàng -->
+            <a href="reception.html" class="card quick-action" style="text-align:center; padding:var(--space-5); cursor:pointer; transition: all var(--transition-normal);">
+              <div class="stat-card-icon primary" style="margin: 0 auto var(--space-3); width:52px; height:52px; border-radius:var(--radius-xl);">
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="12" y1="18" x2="12" y2="12"></line><line x1="9" y1="15" x2="15" y2="15"></line></svg>
+              </div>
+              <p style="font-weight:600; font-size:var(--text-sm);">Tạo phiếu dịch vụ</p>
+              <p style="font-size:var(--text-xs); color:hsl(var(--color-text-muted));">Tiếp nhận thiết bị mới</p>
+            </a>
+
+            <!-- Tương tự "Thanh toán" -->
+            <a href="payment.html" class="card quick-action" style="text-align:center; padding:var(--space-5); cursor:pointer; transition: all var(--transition-normal);">
+              <div class="stat-card-icon success" style="margin: 0 auto var(--space-3); width:52px; height:52px; border-radius:var(--radius-xl);">
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg>
+              </div>
+              <p style="font-weight:600; font-size:var(--text-sm);">Thanh toán dịch vụ</p>
+              <p style="font-size:var(--text-xs); color:hsl(var(--color-text-muted));">Thu tiền hoàn thành</p>
+            </a>
+
+            <!-- Tương tự "Trả hàng" -->
+            <a href="returns.html" class="card quick-action" style="text-align:center; padding:var(--space-5); cursor:pointer; transition: all var(--transition-normal);">
+              <div class="stat-card-icon warning" style="margin: 0 auto var(--space-3); width:52px; height:52px; border-radius:var(--radius-xl);">
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1 4 1 10 7 10"></polyline><path d="M3.51 15a9 9 0 1 0 .49-3.7L1 10"></path></svg>
+              </div>
+              <p style="font-weight:600; font-size:var(--text-sm);">Hoàn trả thiết bị</p>
+              <p style="font-size:var(--text-xs); color:hsl(var(--color-text-muted));">Xử lý hoàn trả</p>
+            </a>
+
+            <!-- Tương tự "Xem báo cáo cuối ngày" -->
+            <a href="daily-report.html" class="card quick-action" style="text-align:center; padding:var(--space-5); cursor:pointer; transition: all var(--transition-normal);">
+              <div class="stat-card-icon info" style="margin: 0 auto var(--space-3); width:52px; height:52px; border-radius:var(--radius-xl);">
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+              </div>
+              <p style="font-weight:600; font-size:var(--text-sm);">Báo cáo cuối ngày</p>
+              <p style="font-size:var(--text-xs); color:hsl(var(--color-text-muted));">Tổng kết hoạt động</p>
+            </a>
+          </div>
+
+          <!-- Row 2 - Quản lý -->
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+            <a href="devices.html" class="card quick-action" style="text-align:center; padding:var(--space-5); cursor:pointer; transition: all var(--transition-normal);">
+              <div class="stat-card-icon purple" style="margin: 0 auto var(--space-3); width:52px; height:52px; border-radius:var(--radius-xl);">
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><path d="M8 21h8"></path><path d="M12 17v4"></path></svg>
+              </div>
+              <p style="font-weight:600; font-size:var(--text-sm);">Thiết bị</p>
+              <p style="font-size:var(--text-xs); color:hsl(var(--color-text-muted));">Quản lý danh sách</p>
+            </a>
+
+            <a href="spare-parts.html" class="card quick-action" style="text-align:center; padding:var(--space-5); cursor:pointer; transition: all var(--transition-normal);">
+              <div class="stat-card-icon warning" style="margin: 0 auto var(--space-3); width:52px; height:52px; border-radius:var(--radius-xl);">
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path></svg>
+              </div>
+              <p style="font-weight:600; font-size:var(--text-sm);">Linh kiện/Vật tư</p>
+              <p style="font-size:var(--text-xs); color:hsl(var(--color-text-muted));">Quản lý kho</p>
+            </a>
+
+            <a href="customers.html" class="card quick-action" style="text-align:center; padding:var(--space-5); cursor:pointer; transition: all var(--transition-normal);">
+              <div class="stat-card-icon success" style="margin: 0 auto var(--space-3); width:52px; height:52px; border-radius:var(--radius-xl);">
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+              </div>
+              <p style="font-weight:600; font-size:var(--text-sm);">Khách hàng</p>
+              <p style="font-size:var(--text-xs); color:hsl(var(--color-text-muted));">Quản lý đối tác</p>
+            </a>
+
+            <a href="reports.html" class="card quick-action" style="text-align:center; padding:var(--space-5); cursor:pointer; transition: all var(--transition-normal);">
+              <div class="stat-card-icon danger" style="margin: 0 auto var(--space-3); width:52px; height:52px; border-radius:var(--radius-xl);">
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+              </div>
+              <p style="font-weight:600; font-size:var(--text-sm);">Báo cáo doanh thu</p>
+              <p style="font-size:var(--text-xs); color:hsl(var(--color-text-muted));">Thống kê tài chính</p>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Toast Container -->
+  <div id="toast-container" class="toast-container"></div>
+
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+  <!-- App Scripts -->
+  <script src="assets/js/api.js"></script>
+  <script src="assets/js/sidebar.js"></script>
+  <script src="assets/js/main.js"></script>
+  <script src="assets/js/pages/dashboard.js"></script>
+</body>
+</html>

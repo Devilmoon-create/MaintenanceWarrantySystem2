@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="vi" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hoàn trả Thiết bị - Hệ thống Quản lý Bảo Trì & Bảo Hành</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔧</text></svg>">
+</head>
+<body data-page="returns" data-title="Hoàn trả Thiết bị">
+  <main class="main-content" role="main">
+    <div class="page-content">
+      <div class="card mb-6">
+        <div class="card-body" style="padding:var(--space-4) var(--space-6);">
+          <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+            <div class="flex gap-3">
+              <button class="btn btn-primary" id="btn-create-return">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1 4 1 10 7 10"></polyline><path d="M3.51 15a9 9 0 1 0 .49-3.7L1 10"></path></svg>
+                Tạo phiếu hoàn trả
+              </button>
+            </div>
+            <div class="flex gap-2">
+              <div style="position:relative;">
+                <svg style="position:absolute;left:12px;top:50%;transform:translateY(-50%);width:16px;height:16px;color:hsl(var(--color-text-muted));pointer-events:none;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                <input type="search" class="form-input" placeholder="Mã phiếu, khách hàng..." style="padding-left:38px;min-width:240px;">
+              </div>
+              <select class="form-select" style="width:auto;min-width:160px;">
+                <option value="">Tất cả trạng thái</option>
+                <option value="pending">Chờ xử lý</option>
+                <option value="approved">Đã duyệt</option>
+                <option value="completed">Hoàn thành</option>
+                <option value="rejected">Từ chối</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="table-responsive">
+          <table class="table">
+            <thead><tr><th>Mã hoàn trả</th><th>Phiếu gốc</th><th>Khách hàng</th><th>Thiết bị</th><th>Lý do</th><th>Hoàn tiền</th><th>Trạng thái</th><th>Ngày</th><th>Thao tác</th></tr></thead>
+            <tbody>
+              <tr>
+                <td><code>HT-001</code></td><td><a href="#" style="color:hsl(var(--color-primary));">PT-007</a></td><td><strong>Hoàng Thị G</strong></td>
+                <td>MacBook Pro 14 M3</td><td style="font-size:var(--text-sm);">Khách không đồng ý giá sửa</td>
+                <td style="font-weight:700;">0 ₫</td><td><span class="badge badge-success">Hoàn thành</span></td><td>12/10/2024</td>
+                <td><button class="btn btn-ghost btn-sm"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg></button></td>
+              </tr>
+              <tr>
+                <td><code>HT-002</code></td><td><a href="#" style="color:hsl(var(--color-primary));">PT-003</a></td><td><strong>Lê Văn C</strong></td>
+                <td>HP EliteBook 840 G7</td><td style="font-size:var(--text-sm);">Lỗi chưa được sửa triệt để</td>
+                <td style="font-weight:700;color:hsl(var(--color-danger));">-200,000 ₫</td><td><span class="badge badge-warning">Chờ xử lý</span></td><td>24/10/2024</td>
+                <td><div class="flex gap-1">
+                  <button class="btn btn-ghost btn-sm" title="Chi tiết"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg></button>
+                  <button class="btn btn-ghost btn-sm" title="Duyệt" style="color:hsl(var(--color-success));"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 11 12 14 22 4"></polyline><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg></button>
+                </div></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </main>
+  <div id="toast-container" class="toast-container"></div>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+  <script src="assets/js/api.js"></script>
+  <script src="assets/js/sidebar.js"></script>
+  <script src="assets/js/main.js"></script>
+</body>
+</html>

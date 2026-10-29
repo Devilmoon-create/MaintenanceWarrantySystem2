@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="vi" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Thanh toán Dịch vụ - Hệ thống Quản lý Bảo Trì & Bảo Hành</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔧</text></svg>">
+</head>
+<body data-page="payment" data-title="Thanh toán Dịch vụ">
+  <main class="main-content" role="main">
+    <div class="page-content">
+      <div class="card mb-6">
+        <div class="card-body" style="padding:var(--space-4) var(--space-6);">
+          <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+            <h2 style="font-size:var(--text-lg);font-weight:700;">Phiếu chờ thanh toán</h2>
+            <div style="position:relative;">
+              <svg style="position:absolute;left:12px;top:50%;transform:translateY(-50%);width:16px;height:16px;color:hsl(var(--color-text-muted));pointer-events:none;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+              <input type="search" class="form-input" placeholder="Tìm phiếu cần thanh toán..." style="padding-left:38px;min-width:260px;">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div class="card" style="cursor:pointer;transition:all var(--transition-normal);" onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='var(--shadow-lg)';" onmouseout="this.style.transform='';this.style.boxShadow='';">
+          <div class="card-body">
+            <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:var(--space-3);"><code style="font-size:var(--text-xs);">PT-004</code><span class="badge badge-warning">Chưa TT</span></div>
+            <p style="font-weight:700;margin-bottom:var(--space-1);">Đại học Bách Khoa</p>
+            <p style="font-size:var(--text-sm);color:hsl(var(--color-text-muted));margin-bottom:var(--space-3);">HP LaserJet Pro M404dn — Bảo trì</p>
+            <div style="border-top:1px solid hsl(var(--color-border));padding-top:var(--space-3);display:flex;justify-content:space-between;align-items:center;">
+              <span style="font-size:var(--text-lg);font-weight:700;color:hsl(var(--color-success));">500,000 ₫</span>
+              <button class="btn btn-primary btn-sm">Thanh toán</button>
+            </div>
+          </div>
+        </div>
+        <div class="card" style="cursor:pointer;transition:all var(--transition-normal);" onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='var(--shadow-lg)';" onmouseout="this.style.transform='';this.style.boxShadow='';">
+          <div class="card-body">
+            <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:var(--space-3);"><code style="font-size:var(--text-xs);">PT-005</code><span class="badge badge-warning">Chưa TT</span></div>
+            <p style="font-weight:700;margin-bottom:var(--space-1);">Trần Minh E</p>
+            <p style="font-size:var(--text-sm);color:hsl(var(--color-text-muted));margin-bottom:var(--space-3);">Lenovo ThinkPad T14 — Sửa chữa</p>
+            <div style="border-top:1px solid hsl(var(--color-border));padding-top:var(--space-3);display:flex;justify-content:space-between;align-items:center;">
+              <span style="font-size:var(--text-lg);font-weight:700;color:hsl(var(--color-success));">1,800,000 ₫</span>
+              <button class="btn btn-primary btn-sm">Thanh toán</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+  <div id="toast-container" class="toast-container"></div>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+  <script src="assets/js/api.js"></script>
+  <script src="assets/js/sidebar.js"></script>
+  <script src="assets/js/main.js"></script>
+</body>
+</html>

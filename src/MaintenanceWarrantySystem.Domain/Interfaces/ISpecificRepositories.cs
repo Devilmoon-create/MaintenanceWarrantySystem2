@@ -11,6 +11,13 @@ public interface ICustomerRepository : IRepository<Customer>
     Task<bool> IsCodeUniqueAsync(string code, int? excludeId = null);
 }
 
+public interface ICategoryRepository : IRepository<Category>
+{
+    Task<Category?> GetByCodeAsync(string code);
+    Task<IEnumerable<Category>> GetAllWithDeviceCountAsync();
+    Task<bool> IsCodeUniqueAsync(string code, int? excludeId = null);
+}
+
 public interface IDeviceRepository : IRepository<Device>
 {
     Task<Device?> GetByCodeAsync(string code);

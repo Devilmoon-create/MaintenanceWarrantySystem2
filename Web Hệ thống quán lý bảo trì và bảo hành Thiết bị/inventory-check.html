@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="vi" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Kiểm kho linh kiện - Hệ thống quản lý Bảo Trì và Bảo Hành Thiết Bị">
+  <title>Kiểm kho Linh kiện - Hệ thống Quản lý Bảo Trì & Bảo Hành</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔧</text></svg>">
+</head>
+<body data-page="inventory-check" data-title="Kiểm kho Linh kiện">
+  <main class="main-content" role="main">
+    <div class="page-content">
+      <div class="card mb-6">
+        <div class="card-body" style="padding:var(--space-4) var(--space-6);">
+          <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+            <div class="flex gap-3">
+              <button class="btn btn-primary" id="btn-create-check">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                Tạo phiếu kiểm kho
+              </button>
+            </div>
+            <div style="position:relative;">
+              <svg style="position:absolute;left:12px;top:50%;transform:translateY(-50%);width:16px;height:16px;color:hsl(var(--color-text-muted));pointer-events:none;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+              <input type="search" class="form-input" placeholder="Tìm phiếu kiểm kho..." style="padding-left:38px;min-width:240px;">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="table-responsive">
+          <table class="table">
+            <thead><tr><th>Mã phiếu</th><th>Ngày kiểm</th><th>Người kiểm</th><th>Tổng LK</th><th>Chênh lệch</th><th>Trạng thái</th><th>Thao tác</th></tr></thead>
+            <tbody>
+              <tr><td><code>KK-2024-001</code></td><td>20/10/2024</td><td>Nguyễn Quản Trị</td><td>48 loại</td><td style="color:hsl(var(--color-warning));font-weight:700;">-3 chiếc</td><td><span class="badge badge-success">Đã duyệt</span></td><td><button class="btn btn-ghost btn-sm" title="Chi tiết"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg></button></td></tr>
+              <tr><td><code>KK-2024-002</code></td><td>01/10/2024</td><td>Hoàng Đức Quản</td><td>48 loại</td><td style="color:hsl(var(--color-success));font-weight:700;">0</td><td><span class="badge badge-success">Đã duyệt</span></td><td><button class="btn btn-ghost btn-sm" title="Chi tiết"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg></button></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </main>
+  <div id="toast-container" class="toast-container"></div>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+  <script src="assets/js/api.js"></script>
+  <script src="assets/js/sidebar.js"></script>
+  <script src="assets/js/main.js"></script>
+</body>
+</html>

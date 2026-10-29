@@ -9,3 +9,5 @@ C:\source\Hệ Thống quản lý Bảo Trì và Bảo Hành Thiết Bị\src\Ma
 C:\source\Hệ Thống quản lý Bảo Trì và Bảo Hành Thiết Bị\src\MaintenanceWarrantySystem.Domain\obj\Debug\net9.0\refint\MaintenanceWarrantySystem.Domain.dll
 C:\source\Hệ Thống quản lý Bảo Trì và Bảo Hành Thiết Bị\src\MaintenanceWarrantySystem.Domain\obj\Debug\net9.0\MaintenanceWarrantySystem.Domain.pdb
 C:\source\Hệ Thống quản lý Bảo Trì và Bảo Hành Thiết Bị\src\MaintenanceWarrantySystem.Domain\obj\Debug\net9.0\ref\MaintenanceWarrantySystem.Domain.dll
+C:\source\Hệ Thống quản lý Bảo Trì và Bảo Hành Thiết Bị\src\MaintenanceWarrantySystem.Domain\obj\Debug\net9.0\MaintenanceWarrantySystem.Domain.sourcelink.json
+C:\source\Hệ Thống quản lý Bảo Trì và Bảo Hành Thiết Bị\src\MaintenanceWarrantySystem.Domain\obj\Debug\net9.0\Maintena.80E8140E.Up2Date

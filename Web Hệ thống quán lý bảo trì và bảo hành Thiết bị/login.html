@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="vi" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Đăng nhập - Hệ thống quản lý Bảo Trì và Bảo Hành Thiết Bị">
+  <title>Đăng nhập - Hệ thống Quản lý Bảo Trì & Bảo Hành</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔧</text></svg>">
+
+  <style>
+    .login-page {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: var(--space-6);
+      background: linear-gradient(135deg, hsl(var(--color-bg-secondary)) 0%, hsl(var(--color-bg-tertiary)) 100%);
+    }
+
+    .login-card {
+      width: 100%;
+      max-width: 420px;
+      background: hsl(var(--color-bg-card));
+      border: 1px solid hsl(var(--color-border));
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow-xl);
+      overflow: hidden;
+    }
+
+    .login-header {
+      padding: var(--space-8) var(--space-6) var(--space-4);
+      text-align: center;
+      border-bottom: 1px solid hsl(var(--color-border));
+      background: linear-gradient(135deg, hsl(var(--color-primary) / 0.05), hsl(var(--color-secondary) / 0.05));
+    }
+
+    .login-logo {
+      width: 64px;
+      height: 64px;
+      border-radius: var(--radius-xl);
+      background: linear-gradient(135deg, hsl(var(--color-primary)), hsl(var(--color-secondary)));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto var(--space-4);
+      box-shadow: var(--shadow-glow);
+    }
+
+    .login-logo svg {
+      width: 32px;
+      height: 32px;
+      color: white;
+      stroke-width: 2.5;
+    }
+
+    .login-title {
+      font-size: var(--text-2xl);
+      font-weight: 700;
+      color: hsl(var(--color-text-primary));
+      margin-bottom: var(--space-1);
+    }
+
+    .login-subtitle {
+      font-size: var(--text-sm);
+      color: hsl(var(--color-text-muted));
+    }
+
+    .login-body {
+      padding: var(--space-6);
+    }
+
+    .login-form .form-group {
+      margin-bottom: var(--space-5);
+    }
+
+    .login-form .form-label {
+      font-size: var(--text-sm);
+      font-weight: 500;
+      margin-bottom: var(--space-2);
+    }
+
+    .login-form .form-input {
+      height: 48px;
+      padding: 0 var(--space-4);
+      font-size: var(--text-base);
+    }
+
+    .login-form .form-input:focus {
+      box-shadow: 0 0 0 3px hsl(var(--color-primary) / 0.15);
+    }
+
+    .form-options {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: var(--space-6);
+    }
+
+    .form-check {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+    }
+
+    .form-check-input {
+      width: 18px;
+      height: 18px;
+      border: 2px solid hsl(var(--color-border));
+      border-radius: var(--radius-sm);
+      appearance: none;
+      cursor: pointer;
+      transition: all var(--transition-fast);
+      flex-shrink: 0;
+      position: relative;
+    }
+
+    .form-check-input:checked {
+      background: hsl(var(--color-primary));
+      border-color: hsl(var(--color-primary));
+    }
+
+    .form-check-input:checked::after {
+      content: '';
+      position: absolute;
+      left: 5px;
+      top: 2px;
+      width: 5px;
+      height: 9px;
+      border: solid white;
+      border-width: 0 2px 2px 0;
+      transform: rotate(45deg);
+    }
+
+    .form-check-label {
+      font-size: var(--text-sm);
+      color: hsl(var(--color-text-secondary));
+      cursor: pointer;
+    }
+
+    .forgot-password {
+      font-size: var(--text-sm);
+      color: hsl(var(--color-primary));
+      font-weight: 500;
+    }
+
+    .forgot-password:hover {
+      text-decoration: underline;
+    }
+
+    .btn-login {
+      width: 100%;
+      height: 48px;
+      font-size: var(--text-base);
+      font-weight: 600;
+      border-radius: var(--radius-md);
+      margin-bottom: var(--space-4);
+    }
+
+    .login-footer {
+      text-align: center;
+      padding-top: var(--space-4);
+      border-top: 1px solid hsl(var(--color-border));
+    }
+
+    .login-footer p {
+      font-size: var(--text-sm);
+      color: hsl(var(--color-text-muted));
+    }
+
+    .login-footer a {
+      font-weight: 500;
+    }
+
+    .demo-credentials {
+      margin-top: var(--space-6);
+      padding: var(--space-4);
+      background: hsl(var(--color-bg-secondary));
+      border-radius: var(--radius-lg);
+      font-size: var(--text-sm);
+    }
+
+    .demo-credentials summary {
+      cursor: pointer;
+      font-weight: 600;
+      color: hsl(var(--color-text-secondary));
+      margin-bottom: var(--space-2);
+    }
+
+    .demo-credentials p {
+      margin: var(--space-1) 0;
+      font-family: var(--font-mono);
+      color: hsl(var(--color-text-primary));
+    }
+
+    .alert {
+      padding: var(--space-3) var(--space-4);
+      border-radius: var(--radius-md);
+      margin-bottom: var(--space-5);
+      font-size: var(--text-sm);
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+    }
+
+    .alert-error {
+      background: hsl(var(--color-danger-light));
+      color: hsl(var(--color-danger));
+      border: 1px solid hsl(var(--color-danger) / 0.2);
+    }
+
+    .alert svg {
+      width: 20px;
+      height: 20px;
+      flex-shrink: 0;
+      stroke-width: 2;
+    }
+
+    /* Animation */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .login-card {
+      animation: fadeInUp 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* Focus visible for accessibility */
+    .form-input:focus-visible,
+    .btn:focus-visible,
+    .form-check-input:focus-visible {
+      outline: 2px solid hsl(var(--color-primary));
+      outline-offset: 2px;
+    }
+  </style>
+</head>
+<body>
+  <div class="login-page">
+    <div class="login-card" role="main">
+      <div class="login-header">
+        <div class="login-logo" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+            <path d="M8 21h8"></path>
+            <path d="M12 17v4"></path>
+            <circle cx="8" cy="7" r="2"></circle>
+            <circle cx="16" cy="7" r="2"></circle>
+          </svg>
+        </div>
+        <h1 class="login-title">BảoTrìPro</h1>
+        <p class="login-subtitle">Hệ thống Quản lý Bảo Trì & Bảo Hành Thiết Bị</p>
+      </div>
+
+      <div class="login-body">
+        <div id="login-alert" class="alert alert-error" style="display: none;" role="alert">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>
+          <span id="login-alert-message">Đăng nhập thất bại</span>
+        </div>
+
+        <form id="login-form" class="login-form" novalidate>
+          <div class="form-group">
+            <label class="form-label" for="username">Tên đăng nhập <span class="required">*</span></label>
+            <input type="text" class="form-input" id="username" name="username" required autocomplete="username" placeholder="VD: admin" autofocus>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="password">Mật khẩu <span class="required">*</span></label>
+            <input type="password" class="form-input" id="password" name="password" required autocomplete="current-password" placeholder="••••••••">
+          </div>
+
+          <div class="form-options">
+            <label class="form-check">
+              <input type="checkbox" class="form-check-input" id="remember" name="remember">
+              <span class="form-check-label">Ghi nhớ đăng nhập</span>
+            </label>
+            <a href="#" class="forgot-password" id="forgot-password">Quên mật khẩu?</a>
+          </div>
+
+          <button type="submit" class="btn btn-primary btn-login" id="btn-login">
+            <span class="btn-text">Đăng nhập</span>
+            <div class="spinner-sm" style="display: none;"></div>
+          </button>
+        </form>
+
+        <div class="login-footer">
+          <p>Chưa có tài khoản? <a href="register.html">Đăng ký</a></p>
+        </div>
+
+        <details class="demo-credentials">
+          <summary>Thông tin đăng nhập demo</summary>
+          <p>Admin: <code>admin</code> / <code>admin123</code></p>
+          <p>Technician: <code>tech</code> / <code>tech123</code></p>
+          <p>Viewer: <code>viewer</code> / <code>viewer123</code></p>
+        </details>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+  <script src="assets/js/api.js"></script>
+  <script src="assets/js/main.js"></script>
+  <script>
+    // Login page logic
+    document.addEventListener('DOMContentLoaded', async () => {
+      // Check if already logged in
+      if (API.auth.isAuthenticated()) {
+        window.location.href = 'index.html';
+        return;
+      }
+
+      const form = document.getElementById('login-form');
+      const btnLogin = document.getElementById('btn-login');
+      const btnText = btnLogin.querySelector('.btn-text');
+      const spinner = btnLogin.querySelector('.spinner-sm');
+      const alertEl = document.getElementById('login-alert');
+      const alertMsg = document.getElementById('login-alert-message');
+
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        // Hide previous alert
+        alertEl.style.display = 'none';
+
+        const username = document.getElementById('username').value.trim();
+        const password = document.getElementById('password').value;
+        const remember = document.getElementById('remember').checked;
+
+        if (!username || !password) {
+          showAlert('Vui lòng nhập tên đăng nhập và mật khẩu');
+          return;
+        }
+
+        // Show loading
+        btnLogin.disabled = true;
+        btnText.style.display = 'none';
+        spinner.style.display = 'block';
+
+        try {
+          const result = await API.auth.login(username, password);
+
+          if (result.token) {
+            // Store remember me preference
+            if (remember) {
+              localStorage.setItem('remember_user', username);
+            } else {
+              localStorage.removeItem('remember_user');
+            }
+
+            showAlert('Đăng nhập thành công! Đang chuyển hướng...', 'success');
+
+            // Redirect after short delay
+            setTimeout(() => {
+              window.location.href = 'index.html';
+            }, 800);
+          } else {
+            showAlert(result.message || 'Đăng nhập thất bại');
+          }
+        } catch (err) {
+          showAlert(err.message || 'Có lỗi xảy ra, vui lòng thử lại');
+        } finally {
+          btnLogin.disabled = false;
+          btnText.style.display = 'block';
+          spinner.style.display = 'none';
+        }
+      });
+
+      function showAlert(message, type = 'error') {
+        alertMsg.textContent = message;
+        alertEl.style.display = 'flex';
+        if (type === 'success') {
+          alertEl.className = 'alert';
+          alertEl.style.background = 'hsl(var(--color-success-light))';
+          alertEl.style.color = 'hsl(var(--color-success))';
+          alertEl.style.borderColor = 'hsl(var(--color-success) / 0.2)';
+          alertEl.querySelector('svg').innerHTML = '<polyline points="20 6 9 17 4 12"></polyline>';
+        } else {
+          alertEl.className = 'alert alert-error';
+        }
+      }
+
+      // Auto-fill demo credentials on click
+      document.querySelectorAll('.demo-credentials code').forEach(code => {
+        code.style.cursor = 'pointer';
+        code.addEventListener('click', () => {
+          const text = code.textContent;
+          if (text === 'admin' || text === 'tech' || text === 'viewer') {
+            document.getElementById('username').value = text;
+            document.getElementById('password').value = text + '123';
+          }
+        });
+      });
+
+      // Check for remembered user
+      const rememberedUser = localStorage.getItem('remember_user');
+      if (rememberedUser) {
+        document.getElementById('username').value = rememberedUser;
+        document.getElementById('remember').checked = true;
+        document.getElementById('password').focus();
+      }
+    });
+  </script>
+</body>
+</html>

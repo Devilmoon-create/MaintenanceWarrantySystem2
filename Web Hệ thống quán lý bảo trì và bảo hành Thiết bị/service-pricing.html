@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="vi" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Quản lý giá dịch vụ bảo trì bảo hành - Hệ thống quản lý Bảo Trì và Bảo Hành Thiết Bị">
+  <title>Giá Dịch vụ - Hệ thống Quản lý Bảo Trì & Bảo Hành</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔧</text></svg>">
+</head>
+<body data-page="service-pricing" data-title="Giá Dịch vụ">
+  <main class="main-content" role="main">
+    <div class="page-content">
+      <div class="card mb-6">
+        <div class="card-body" style="padding:var(--space-4) var(--space-6);">
+          <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+            <div class="flex gap-3">
+              <button class="btn btn-primary" id="btn-add-pricing">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                Thêm giá dịch vụ
+              </button>
+              <a href="price-history.html" class="btn btn-outline">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
+                Lịch sử thay đổi giá
+              </a>
+            </div>
+            <div style="position:relative;">
+              <svg style="position:absolute;left:12px;top:50%;transform:translateY(-50%);width:16px;height:16px;color:hsl(var(--color-text-muted));pointer-events:none;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+              <input type="search" class="form-input" id="pricing-search" placeholder="Tên dịch vụ, mã dịch vụ..." style="padding-left:38px;min-width:260px;">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" id="pricing-table-container">
+        <div class="card-body" style="text-align:center;padding:var(--space-12);"><div class="spinner" style="margin:0 auto;"></div><p style="margin-top:var(--space-4);color:hsl(var(--color-text-muted));">Đang tải bảng giá...</p></div>
+      </div>
+      <div id="pricing-pagination"></div>
+    </div>
+  </main>
+
+  <!-- Add/Edit Pricing Modal -->
+  <div class="modal-overlay" id="pricing-modal-overlay" role="dialog" aria-modal="true" aria-labelledby="pricing-modal-title">
+    <div class="modal" style="max-width:560px;">
+      <div class="modal-header">
+        <h2 class="modal-title" id="pricing-modal-title">Thêm giá dịch vụ</h2>
+        <button class="modal-close" data-modal-close aria-label="Đóng"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
+      </div>
+      <form id="pricing-form" novalidate>
+        <div class="modal-body">
+          <input type="hidden" name="id" id="pricing-id">
+          <div class="form-group">
+            <label class="form-label" for="pricing-name">Tên dịch vụ <span class="required">*</span></label>
+            <input type="text" class="form-input" name="name" id="pricing-name" required placeholder="VD: Thay màn hình laptop">
+            <div class="form-error"></div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="pricing-code">Mã dịch vụ</label>
+              <input type="text" class="form-input" name="code" id="pricing-code" placeholder="VD: SVC-001">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="pricing-category">Loại thiết bị áp dụng</label>
+              <select class="form-select" name="categoryId" id="pricing-category">
+                <option value="">Tất cả loại</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="pricing-price">Giá dịch vụ (VND) <span class="required">*</span></label>
+              <input type="number" class="form-input" name="price" id="pricing-price" required min="0" step="10000" placeholder="0">
+              <div class="form-error"></div>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="pricing-unit">Đơn vị</label>
+              <select class="form-select" name="unit" id="pricing-unit">
+                <option value="lần">Lần</option>
+                <option value="giờ">Giờ</option>
+                <option value="thiết bị">Thiết bị</option>
+                <option value="hợp đồng">Hợp đồng</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="pricing-description">Mô tả dịch vụ</label>
+            <textarea class="form-textarea" name="description" id="pricing-description" rows="3" placeholder="Chi tiết công việc bao gồm trong dịch vụ..."></textarea>
+          </div>
+          <div class="form-check">
+            <input type="checkbox" class="form-check-input" name="isActive" id="pricing-active" checked>
+            <label class="form-check-label" for="pricing-active">Đang áp dụng</label>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-modal-close>Hủy</button>
+          <button type="submit" class="btn btn-primary" id="pricing-submit-btn"><span class="btn-text">Lưu giá dịch vụ</span></button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div id="toast-container" class="toast-container"></div>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+  <script src="assets/js/api.js"></script>
+  <script src="assets/js/sidebar.js"></script>
+  <script src="assets/js/main.js"></script>
+  <script src="assets/js/pages/service-pricing.js"></script>
+</body>
+</html>

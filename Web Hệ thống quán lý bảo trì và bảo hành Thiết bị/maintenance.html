@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="vi" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Quản lý phiếu bảo trì và bảo hành - Hệ thống quản lý Bảo Trì và Bảo Hành Thiết Bị">
+  <title>Phiếu Bảo Trì & Bảo Hành - Hệ thống Quản lý Bảo Trì & Bảo Hành</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔧</text></svg>">
+</head>
+<body data-page="maintenance" data-title="Phiếu Bảo Trì & Bảo Hành">
+
+  <!-- Sidebar & Header injected by sidebar.js -->
+
+  <main class="main-content" role="main">
+    <div class="page-content">
+
+      <!-- Main Tabs - Tương tự phân loại hóa đơn trong POS -->
+      <div class="card mb-6">
+        <div class="card-body" style="padding: var(--space-4) var(--space-6);">
+          <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+            <!-- Tab navigation -->
+            <div class="tabs" role="tablist" aria-label="Loại phiếu">
+              <button class="tab-btn active" role="tab" aria-selected="true" data-tab="all" id="tab-all">Tất cả phiếu</button>
+              <button class="tab-btn" role="tab" aria-selected="false" data-tab="maintenance" id="tab-maintenance">Bảo trì</button>
+              <button class="tab-btn" role="tab" aria-selected="false" data-tab="warranty" id="tab-warranty">Bảo hành</button>
+              <button class="tab-btn" role="tab" aria-selected="false" data-tab="schedule" id="tab-schedule">Định kỳ</button>
+            </div>
+
+            <!-- Actions -->
+            <div class="flex flex-wrap gap-2">
+              <button class="btn btn-primary" id="btn-create-ticket">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                Tạo phiếu mới
+              </button>
+              <button class="btn btn-outline" id="btn-export-maintenance">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                Xuất Excel
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Filters - Tìm kiếm theo mã, tên, khách hàng (giống "Tìm khách hàng" / "Tìm kiếm sản phẩm" trong POS) -->
+      <div class="card mb-4">
+        <div class="card-body" style="padding: var(--space-4) var(--space-6);">
+          <div class="flex flex-wrap gap-3 items-center">
+            <div style="position: relative; flex: 1; min-width:200px;">
+              <svg style="position:absolute; left:12px; top:50%; transform:translateY(-50%); width:16px; height:16px; color:hsl(var(--color-text-muted)); pointer-events:none;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+              <input type="search" class="form-input" id="ticket-search" placeholder="Mã phiếu, thiết bị, khách hàng..." style="padding-left: 38px;" aria-label="Tìm kiếm phiếu">
+            </div>
+            <select class="form-select" id="filter-ticket-status" style="width: auto; min-width:160px;">
+              <option value="">Tất cả trạng thái</option>
+              <option value="pending">Chờ tiếp nhận</option>
+              <option value="received">Đã tiếp nhận</option>
+              <option value="diagnosing">Đang kiểm tra</option>
+              <option value="repairing">Đang sửa chữa</option>
+              <option value="waiting_parts">Chờ linh kiện</option>
+              <option value="completed">Hoàn thành</option>
+              <option value="delivered">Đã trả khách</option>
+              <option value="cancelled">Đã hủy</option>
+            </select>
+            <select class="form-select" id="filter-ticket-priority" style="width: auto; min-width:140px;">
+              <option value="">Tất cả độ ưu tiên</option>
+              <option value="low">Thấp</option>
+              <option value="normal">Bình thường</option>
+              <option value="high">Cao</option>
+              <option value="urgent">Khẩn cấp</option>
+            </select>
+            <select class="form-select" id="filter-ticket-technician" style="width: auto; min-width:160px;">
+              <option value="">Tất cả kỹ thuật viên</option>
+            </select>
+            <div class="flex gap-2">
+              <input type="date" class="form-input" id="filter-date-from" style="width:auto;" aria-label="Từ ngày">
+              <input type="date" class="form-input" id="filter-date-to" style="width:auto;" aria-label="Đến ngày">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tickets Table -->
+      <div class="card" id="maintenance-table-container">
+        <div class="card-body" style="text-align:center; padding: var(--space-12);">
+          <div class="spinner" style="margin: 0 auto;"></div>
+          <p style="margin-top:var(--space-4); color:hsl(var(--color-text-muted));">Đang tải danh sách phiếu...</p>
+        </div>
+      </div>
+
+      <!-- Pagination -->
+      <div id="maintenance-pagination"></div>
+    </div>
+  </main>
+
+  <!-- Create/Edit Ticket Modal -->
+  <div class="modal-overlay" id="ticket-modal-overlay" role="dialog" aria-modal="true" aria-labelledby="ticket-modal-title">
+    <div class="modal" style="max-width: 780px;">
+      <div class="modal-header">
+        <h2 class="modal-title" id="ticket-modal-title">Tạo phiếu dịch vụ mới</h2>
+        <button class="modal-close" data-modal-close aria-label="Đóng">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+      </div>
+      <form id="ticket-form" novalidate>
+        <div class="modal-body">
+          <input type="hidden" name="id" id="ticket-id">
+
+          <!-- Thông tin cơ bản -->
+          <h3 class="section-title mb-3" style="font-size:var(--text-sm); font-weight:600; text-transform:uppercase; letter-spacing:0.05em; color:hsl(var(--color-text-muted)); border-bottom:1px solid hsl(var(--color-border)); padding-bottom:var(--space-2); margin-bottom:var(--space-4);">Thông tin phiếu</h3>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="ticket-type">Loại phiếu <span class="required">*</span></label>
+              <select class="form-select" name="type" id="ticket-type" required>
+                <option value="maintenance">Bảo trì</option>
+                <option value="warranty">Bảo hành</option>
+                <option value="repair">Sửa chữa</option>
+                <option value="inspection">Kiểm tra định kỳ</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="ticket-priority">Độ ưu tiên</label>
+              <select class="form-select" name="priority" id="ticket-priority">
+                <option value="low">Thấp</option>
+                <option value="normal" selected>Bình thường</option>
+                <option value="high">Cao</option>
+                <option value="urgent">Khẩn cấp</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Tìm khách hàng - Tương tự "Tìm khách hàng" trong POS -->
+          <h3 class="section-title mb-3" style="font-size:var(--text-sm); font-weight:600; text-transform:uppercase; letter-spacing:0.05em; color:hsl(var(--color-text-muted)); border-bottom:1px solid hsl(var(--color-border)); padding-bottom:var(--space-2); margin-bottom:var(--space-4);">Khách hàng</h3>
+          <div class="form-row">
+            <div class="form-group" style="flex:2;">
+              <label class="form-label" for="ticket-customer-search">Tìm khách hàng <span class="required">*</span></label>
+              <div style="position: relative;">
+                <svg style="position:absolute; left:12px; top:50%; transform:translateY(-50%); width:16px; height:16px; color:hsl(var(--color-text-muted)); pointer-events:none;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                <input type="search" class="form-input" id="ticket-customer-search" placeholder="Tên, số điện thoại, email..." style="padding-left: 38px;">
+              </div>
+              <!-- Gợi ý tìm kiếm khách hàng -->
+              <div id="customer-suggestions" class="search-suggestions" style="display:none; position:absolute; background:hsl(var(--color-bg-card)); border:1px solid hsl(var(--color-border)); border-radius:var(--radius-md); box-shadow:var(--shadow-lg); z-index:100; max-height:200px; overflow-y:auto; width:100%;"></div>
+              <input type="hidden" name="customerId" id="ticket-customer-id">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="ticket-customer-phone">Số điện thoại</label>
+              <input type="tel" class="form-input" name="customerPhone" id="ticket-customer-phone" placeholder="Tự điền khi chọn khách">
+            </div>
+          </div>
+
+          <!-- Tìm thiết bị - Tương tự "Tìm kiếm sản phẩm" trong POS -->
+          <h3 class="section-title mb-3" style="font-size:var(--text-sm); font-weight:600; text-transform:uppercase; letter-spacing:0.05em; color:hsl(var(--color-text-muted)); border-bottom:1px solid hsl(var(--color-border)); padding-bottom:var(--space-2); margin-bottom:var(--space-4);">Thiết bị cần dịch vụ</h3>
+          <div class="form-row">
+            <div class="form-group" style="flex:2;">
+              <label class="form-label" for="ticket-device-search">Tìm thiết bị <span class="required">*</span></label>
+              <div style="position: relative;">
+                <svg style="position:absolute; left:12px; top:50%; transform:translateY(-50%); width:16px; height:16px; color:hsl(var(--color-text-muted)); pointer-events:none;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                <input type="search" class="form-input" id="ticket-device-search" placeholder="Tên, mã, serial số..." style="padding-left: 38px;">
+              </div>
+              <input type="hidden" name="deviceId" id="ticket-device-id" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="ticket-device-serial">Serial thiết bị</label>
+              <input type="text" class="form-input" id="ticket-device-serial" placeholder="Tự điền khi chọn" readonly>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="ticket-issue">Mô tả sự cố / Yêu cầu <span class="required">*</span></label>
+            <textarea class="form-textarea" name="issue" id="ticket-issue" rows="3" required placeholder="Mô tả chi tiết sự cố hoặc yêu cầu dịch vụ..."></textarea>
+            <div class="form-error"></div>
+          </div>
+
+          <!-- Linh kiện sử dụng - Tương tự "Thêm sản phẩm" / "Thay đổi số lượng" -->
+          <h3 class="section-title mb-3" style="font-size:var(--text-sm); font-weight:600; text-transform:uppercase; letter-spacing:0.05em; color:hsl(var(--color-text-muted)); border-bottom:1px solid hsl(var(--color-border)); padding-bottom:var(--space-2); margin-bottom:var(--space-4);">Linh kiện & Vật tư sử dụng</h3>
+          <div id="spare-parts-list" style="margin-bottom:var(--space-3);">
+            <!-- Dòng linh kiện sẽ được thêm ở đây -->
+          </div>
+          <button type="button" class="btn btn-outline btn-sm" id="btn-add-spare-part">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+            Thêm linh kiện
+          </button>
+
+          <!-- Chi phí -->
+          <div class="form-row" style="margin-top:var(--space-4);">
+            <div class="form-group">
+              <label class="form-label" for="ticket-labor-cost">Chi phí công lao động (VND)</label>
+              <input type="number" class="form-input" name="laborCost" id="ticket-labor-cost" min="0" step="10000" placeholder="0">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="ticket-technician">Kỹ thuật viên phụ trách</label>
+              <select class="form-select" name="technicianId" id="ticket-technician">
+                <option value="">Chọn kỹ thuật viên</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="ticket-scheduled-date">Dự kiến hoàn thành</label>
+              <input type="date" class="form-input" name="scheduledDate" id="ticket-scheduled-date">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="ticket-status">Trạng thái ban đầu</label>
+              <select class="form-select" name="status" id="ticket-status">
+                <option value="pending">Chờ tiếp nhận</option>
+                <option value="received" selected>Đã tiếp nhận</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="ticket-notes">Ghi chú nội bộ</label>
+            <textarea class="form-textarea" name="notes" id="ticket-notes" rows="2" placeholder="Ghi chú cho kỹ thuật viên hoặc nội bộ..."></textarea>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <div style="font-size:var(--text-sm); color:hsl(var(--color-text-muted));">
+            Tổng chi phí: <strong id="ticket-total-cost">0 ₫</strong>
+          </div>
+          <div class="flex gap-2">
+            <button type="button" class="btn btn-secondary" data-modal-close>Hủy</button>
+            <button type="submit" class="btn btn-primary" id="ticket-submit-btn">
+              <span class="btn-text">Lưu phiếu</span>
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- View Ticket Detail Modal -->
+  <div class="modal-overlay" id="view-ticket-modal-overlay" role="dialog" aria-modal="true" aria-labelledby="view-ticket-modal-title">
+    <div class="modal" style="max-width: 700px;">
+      <div class="modal-header">
+        <h2 class="modal-title" id="view-ticket-modal-title">Chi tiết phiếu dịch vụ</h2>
+        <button class="modal-close" data-modal-close aria-label="Đóng">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+      </div>
+      <div class="modal-body" id="view-ticket-content">
+        <!-- Rendered by JS -->
+      </div>
+      <div class="modal-footer" id="view-ticket-footer">
+        <button type="button" class="btn btn-secondary" data-modal-close>Đóng</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Update Status Modal - Tương tự "Thay đổi trạng thái phiếu" -->
+  <div class="modal-overlay" id="status-modal-overlay" role="dialog" aria-modal="true" aria-labelledby="status-modal-title">
+    <div class="modal" style="max-width: 480px;">
+      <div class="modal-header">
+        <h2 class="modal-title" id="status-modal-title">Cập nhật trạng thái</h2>
+        <button class="modal-close" data-modal-close aria-label="Đóng">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+      </div>
+      <div class="modal-body">
+        <input type="hidden" id="status-ticket-id">
+        <div class="form-group">
+          <label class="form-label">Trạng thái hiện tại</label>
+          <div id="current-status-badge" style="margin-bottom:var(--space-3);"></div>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="new-status-select">Chuyển sang trạng thái <span class="required">*</span></label>
+          <select class="form-select" id="new-status-select">
+            <option value="pending">Chờ tiếp nhận</option>
+            <option value="received">Đã tiếp nhận</option>
+            <option value="diagnosing">Đang kiểm tra</option>
+            <option value="repairing">Đang sửa chữa</option>
+            <option value="waiting_parts">Chờ linh kiện</option>
+            <option value="completed">Hoàn thành</option>
+            <option value="delivered">Đã trả khách</option>
+            <option value="cancelled">Đã hủy</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="status-note">Ghi chú cập nhật</label>
+          <textarea class="form-textarea" id="status-note" rows="3" placeholder="Lý do thay đổi trạng thái, công việc đã làm..."></textarea>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-modal-close>Hủy</button>
+        <button type="button" class="btn btn-primary" id="btn-status-update">Cập nhật</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Payment Modal - Tương tự "Thanh toán" trong POS -->
+  <div class="modal-overlay" id="payment-modal-overlay" role="dialog" aria-modal="true" aria-labelledby="payment-modal-title">
+    <div class="modal" style="max-width: 500px;">
+      <div class="modal-header">
+        <h2 class="modal-title" id="payment-modal-title">Thanh toán dịch vụ</h2>
+        <button class="modal-close" data-modal-close aria-label="Đóng">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+      </div>
+      <div class="modal-body" id="payment-modal-content">
+        <!-- Rendered by JS -->
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-modal-close>Hủy</button>
+        <button type="button" class="btn btn-success" id="btn-confirm-payment">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+          Xác nhận thanh toán
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast-container" class="toast-container"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+  <script src="assets/js/api.js"></script>
+  <script src="assets/js/sidebar.js"></script>
+  <script src="assets/js/main.js"></script>
+  <script src="assets/js/pages/maintenance.js"></script>
+</body>
+</html>

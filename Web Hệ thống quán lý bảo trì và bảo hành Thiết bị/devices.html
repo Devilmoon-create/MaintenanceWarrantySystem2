@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="vi" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Quản lý danh sách thiết bị - Hệ thống quản lý Bảo Trì và Bảo Hành Thiết Bị">
+  <title>Quản lý Thiết bị - Hệ thống Quản lý Bảo Trì & Bảo Hành</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔧</text></svg>">
+</head>
+<body data-page="devices" data-title="Quản lý Thiết bị">
+
+  <!-- Sidebar & Header injected by sidebar.js -->
+
+  <main class="main-content" role="main">
+    <div class="page-content">
+
+      <!-- Toolbar -->
+      <div class="card mb-6">
+        <div class="card-body" style="padding: var(--space-4) var(--space-6);">
+          <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+            <div class="flex flex-wrap gap-3">
+              <button class="btn btn-primary" id="btn-add-device">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                Thêm thiết bị
+              </button>
+              <button class="btn btn-outline" id="btn-export-devices">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                Xuất Excel
+              </button>
+              <button class="btn btn-outline" id="btn-import-devices">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+                Nhập Excel
+              </button>
+            </div>
+            <div class="flex flex-wrap gap-2" style="flex-shrink: 0;">
+              <!-- Tìm kiếm sản phẩm: theo mã, theo tên, theo ghi chú -->
+              <div style="position: relative;">
+                <svg style="position:absolute; left:12px; top:50%; transform:translateY(-50%); width:16px; height:16px; color:hsl(var(--color-text-muted)); pointer-events:none;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                <input type="search" class="form-input" id="device-search" placeholder="Mã, tên, serial, ghi chú..." style="padding-left: 38px; min-width:240px;" aria-label="Tìm kiếm thiết bị">
+              </div>
+              <select class="form-select" id="filter-status" style="width: auto; min-width: 160px;">
+                <option value="">Tất cả trạng thái</option>
+                <option value="active">Hoạt động</option>
+                <option value="maintenance">Đang bảo trì</option>
+                <option value="broken">Hỏng</option>
+                <option value="warranty_expired">Hết bảo hành</option>
+                <option value="inactive">Ngưng sử dụng</option>
+              </select>
+              <select class="form-select" id="filter-category" style="width: auto; min-width: 180px;">
+                <option value="">Tất cả loại thiết bị</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Devices Table -->
+      <div class="card" id="devices-table-container">
+        <div class="card-body" style="text-align:center; padding: var(--space-12);">
+          <div class="spinner" style="margin: 0 auto;"></div>
+          <p style="margin-top:var(--space-4); color:hsl(var(--color-text-muted));">Đang tải danh sách thiết bị...</p>
+        </div>
+      </div>
+
+      <!-- Pagination -->
+      <div id="devices-pagination"></div>
+    </div>
+  </main>
+
+  <!-- Add/Edit Device Modal -->
+  <div class="modal-overlay" id="device-modal-overlay" role="dialog" aria-modal="true" aria-labelledby="device-modal-title">
+    <div class="modal" style="max-width: 700px;">
+      <div class="modal-header">
+        <h2 class="modal-title" id="device-modal-title">Thêm thiết bị mới</h2>
+        <button class="modal-close" data-modal-close aria-label="Đóng">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+      </div>
+      <form id="device-form" novalidate>
+        <div class="modal-body">
+          <input type="hidden" name="id" id="device-id">
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="device-code">Mã thiết bị</label>
+              <input type="text" class="form-input" name="code" id="device-code" placeholder="Tự động tạo" readonly>
+              <p class="form-help">Để trống để tự động tạo mã</p>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="device-name">Tên thiết bị <span class="required">*</span></label>
+              <input type="text" class="form-input" name="name" id="device-name" required placeholder="VD: Máy chủ Dell PowerEdge R750">
+              <div class="form-error"></div>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="device-serial">Serial Number <span class="required">*</span></label>
+              <input type="text" class="form-input" name="serialNumber" id="device-serial" required placeholder="VD: SN123456789">
+              <div class="form-error"></div>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="device-category">Loại thiết bị <span class="required">*</span></label>
+              <select class="form-select" name="categoryId" id="device-category" required>
+                <option value="">Chọn loại thiết bị</option>
+              </select>
+              <div class="form-error"></div>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="device-supplier">Nhà cung cấp</label>
+              <input type="text" class="form-input" name="supplier" id="device-supplier" placeholder="VD: Dell Technologies">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="device-location">Vị trí / Địa điểm</label>
+              <input type="text" class="form-input" name="location" id="device-location" placeholder="VD: Tầng 3, Rack A1">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="device-purchase-date">Ngày mua</label>
+              <input type="date" class="form-input" name="purchaseDate" id="device-purchase-date">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="device-warranty-expiry">Ngày hết bảo hành</label>
+              <input type="date" class="form-input" name="warrantyExpiry" id="device-warranty-expiry">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="device-value">Giá trị (VND)</label>
+              <input type="number" class="form-input" name="value" id="device-value" min="0" step="1000000" placeholder="VD: 150000000">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="device-status">Trạng thái</label>
+              <select class="form-select" name="status" id="device-status">
+                <option value="active">Hoạt động</option>
+                <option value="maintenance">Đang bảo trì</option>
+                <option value="broken">Hỏng</option>
+                <option value="warranty_expired">Hết bảo hành</option>
+                <option value="inactive">Ngưng sử dụng</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="device-description">Mô tả / Ghi chú</label>
+            <textarea class="form-textarea" name="description" id="device-description" rows="3" placeholder="Thông tin bổ sung về thiết bị..."></textarea>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-modal-close>Hủy</button>
+          <button type="submit" class="btn btn-primary" id="device-submit-btn">
+            <span class="btn-text">Lưu thiết bị</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Import Modal -->
+  <div class="modal-overlay" id="import-modal-overlay" role="dialog" aria-modal="true" aria-labelledby="import-modal-title">
+    <div class="modal" style="max-width: 500px;">
+      <div class="modal-header">
+        <h2 class="modal-title" id="import-modal-title">Nhập thiết bị từ Excel</h2>
+        <button class="modal-close" data-modal-close aria-label="Đóng">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label class="form-label" for="import-file">File Excel (.xlsx, .xls) <span class="required">*</span></label>
+          <input type="file" class="form-input" id="import-file" accept=".xlsx,.xls" required>
+          <p class="form-help">Tải <a href="#">mẫu file Excel</a> để nhập đúng định dạng</p>
+        </div>
+        <div class="form-check" style="margin-bottom:var(--space-3);">
+          <input type="checkbox" class="form-check-input" id="import-skip-header" checked>
+          <label class="form-check-label" for="import-skip-header">Bỏ qua dòng tiêu đề đầu tiên</label>
+        </div>
+        <div class="form-check">
+          <input type="checkbox" class="form-check-input" id="import-update-existing">
+          <label class="form-check-label" for="import-update-existing">Cập nhật nếu thiết bị đã tồn tại (theo Serial)</label>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-modal-close>Hủy</button>
+        <button type="button" class="btn btn-primary" id="btn-import-submit">Nhập dữ liệu</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Delete Confirm Modal -->
+  <div class="modal-overlay" id="delete-modal-overlay" role="dialog" aria-modal="true" aria-labelledby="delete-modal-title">
+    <div class="modal" style="max-width: 420px;">
+      <div class="modal-header">
+        <h2 class="modal-title" id="delete-modal-title">Xác nhận xóa</h2>
+        <button class="modal-close" data-modal-close aria-label="Đóng">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div style="display:flex; gap:var(--space-4); align-items:flex-start;">
+          <div style="width:48px; height:48px; border-radius:var(--radius-full); background:hsl(var(--color-danger-light)); display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="hsl(var(--color-danger))" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+          </div>
+          <div>
+            <p style="font-weight:600; margin-bottom:var(--space-2);">Xóa thiết bị <strong id="delete-device-name"></strong>?</p>
+            <p style="font-size:var(--text-sm); color:hsl(var(--color-text-muted));">Hành động này không thể hoàn tác. Tất cả lịch sử bảo trì liên quan cũng sẽ bị ảnh hưởng.</p>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-modal-close>Hủy</button>
+        <button type="button" class="btn btn-danger" id="btn-delete-confirm">Xóa vĩnh viễn</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast-container" class="toast-container"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+  <script src="assets/js/api.js"></script>
+  <script src="assets/js/sidebar.js"></script>
+  <script src="assets/js/main.js"></script>
+  <script src="assets/js/pages/devices.js"></script>
+</body>
+</html>

@@ -13,3 +13,4 @@ C:\source\Hệ Thống quản lý Bảo Trì và Bảo Hành Thiết Bị\src\Ma
 C:\source\Hệ Thống quản lý Bảo Trì và Bảo Hành Thiết Bị\src\MaintenanceWarrantySystem.Application\obj\Debug\net9.0\refint\MaintenanceWarrantySystem.Application.dll
 C:\source\Hệ Thống quản lý Bảo Trì và Bảo Hành Thiết Bị\src\MaintenanceWarrantySystem.Application\obj\Debug\net9.0\MaintenanceWarrantySystem.Application.pdb
 C:\source\Hệ Thống quản lý Bảo Trì và Bảo Hành Thiết Bị\src\MaintenanceWarrantySystem.Application\obj\Debug\net9.0\ref\MaintenanceWarrantySystem.Application.dll
+C:\source\Hệ Thống quản lý Bảo Trì và Bảo Hành Thiết Bị\src\MaintenanceWarrantySystem.Application\obj\Debug\net9.0\MaintenanceWarrantySystem.Application.sourcelink.json

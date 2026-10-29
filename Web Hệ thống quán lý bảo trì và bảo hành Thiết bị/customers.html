@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="vi" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Quản lý khách hàng - Hệ thống quản lý Bảo Trì và Bảo Hành Thiết Bị">
+  <title>Quản lý Khách hàng - Hệ thống Quản lý Bảo Trì & Bảo Hành</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔧</text></svg>">
+</head>
+<body data-page="customers" data-title="Quản lý Khách hàng">
+
+  <!-- Sidebar & Header injected by sidebar.js -->
+
+  <main class="main-content" role="main">
+    <div class="page-content">
+
+      <!-- Toolbar -->
+      <div class="card mb-6">
+        <div class="card-body" style="padding: var(--space-4) var(--space-6);">
+          <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+            <div class="flex flex-wrap gap-3">
+              <button class="btn btn-primary" id="btn-add-customer">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                Thêm khách hàng
+              </button>
+              <button class="btn btn-outline" id="btn-export-customers">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                Xuất Excel
+              </button>
+            </div>
+            <div class="flex flex-wrap gap-2">
+              <!-- Tìm khách hàng theo tên, điện thoại, email -->
+              <div style="position: relative;">
+                <svg style="position:absolute; left:12px; top:50%; transform:translateY(-50%); width:16px; height:16px; color:hsl(var(--color-text-muted)); pointer-events:none;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                <input type="search" class="form-input" id="customer-search" placeholder="Tên, điện thoại, email, địa chỉ..." style="padding-left: 38px; min-width: 280px;" aria-label="Tìm kiếm khách hàng">
+              </div>
+              <select class="form-select" id="filter-customer-type" style="width: auto; min-width: 160px;">
+                <option value="">Tất cả loại KH</option>
+                <option value="individual">Cá nhân</option>
+                <option value="company">Doanh nghiệp</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Customer Stats - Quick summary -->
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6" id="customer-stats">
+        <div class="stat-card">
+          <div class="stat-card-header">
+            <span class="stat-card-label">Tổng khách hàng</span>
+            <div class="stat-card-icon primary"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle></svg></div>
+          </div>
+          <div class="stat-card-value" id="stat-total-customers">—</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card-header">
+            <span class="stat-card-label">Doanh nghiệp</span>
+            <div class="stat-card-icon info"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg></div>
+          </div>
+          <div class="stat-card-value" id="stat-company-customers">—</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card-header">
+            <span class="stat-card-label">Phiếu dịch vụ</span>
+            <div class="stat-card-icon success"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg></div>
+          </div>
+          <div class="stat-card-value" id="stat-total-tickets">—</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card-header">
+            <span class="stat-card-label">Doanh thu</span>
+            <div class="stat-card-icon warning"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg></div>
+          </div>
+          <div class="stat-card-value" id="stat-total-revenue">—</div>
+        </div>
+      </div>
+
+      <!-- Customers Table -->
+      <div class="card" id="customers-table-container">
+        <div class="card-body" style="text-align:center; padding: var(--space-12);">
+          <div class="spinner" style="margin: 0 auto;"></div>
+          <p style="margin-top:var(--space-4); color:hsl(var(--color-text-muted));">Đang tải danh sách khách hàng...</p>
+        </div>
+      </div>
+
+      <div id="customers-pagination"></div>
+    </div>
+  </main>
+
+  <!-- Add/Edit Customer Modal -->
+  <div class="modal-overlay" id="customer-modal-overlay" role="dialog" aria-modal="true" aria-labelledby="customer-modal-title">
+    <div class="modal" style="max-width: 660px;">
+      <div class="modal-header">
+        <h2 class="modal-title" id="customer-modal-title">Thêm khách hàng mới</h2>
+        <button class="modal-close" data-modal-close aria-label="Đóng">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+      </div>
+      <form id="customer-form" novalidate>
+        <div class="modal-body">
+          <input type="hidden" name="id" id="customer-id">
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="customer-type-form">Loại khách hàng</label>
+              <select class="form-select" name="type" id="customer-type-form">
+                <option value="individual">Cá nhân</option>
+                <option value="company">Doanh nghiệp</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="customer-code">Mã khách hàng</label>
+              <input type="text" class="form-input" name="code" id="customer-code" placeholder="Tự động tạo" readonly>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="customer-name">Họ tên / Tên công ty <span class="required">*</span></label>
+            <input type="text" class="form-input" name="name" id="customer-name" required placeholder="VD: Nguyễn Văn A / Công ty ABC">
+            <div class="form-error"></div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="customer-phone">Số điện thoại <span class="required">*</span></label>
+              <input type="tel" class="form-input" name="phone" id="customer-phone" required placeholder="VD: 0901234567">
+              <div class="form-error"></div>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="customer-email">Email</label>
+              <input type="email" class="form-input" name="email" id="customer-email" placeholder="VD: khach@email.com">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="customer-address">Địa chỉ</label>
+            <input type="text" class="form-input" name="address" id="customer-address" placeholder="Số nhà, đường, phường/xã, quận/huyện, tỉnh/thành">
+          </div>
+
+          <!-- Thông tin doanh nghiệp -->
+          <div id="company-fields" style="display:none;">
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label" for="customer-tax-code">Mã số thuế</label>
+                <input type="text" class="form-input" name="taxCode" id="customer-tax-code" placeholder="VD: 0123456789">
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="customer-contact-person">Người liên hệ</label>
+                <input type="text" class="form-input" name="contactPerson" id="customer-contact-person" placeholder="Tên người đại diện">
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="customer-notes">Ghi chú</label>
+            <textarea class="form-textarea" name="notes" id="customer-notes" rows="2" placeholder="Lưu ý đặc biệt về khách hàng..."></textarea>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-modal-close>Hủy</button>
+          <button type="submit" class="btn btn-primary" id="customer-submit-btn">
+            <span class="btn-text">Lưu khách hàng</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- View Customer Detail Modal -->
+  <div class="modal-overlay" id="view-customer-modal-overlay" role="dialog" aria-modal="true" aria-labelledby="view-customer-title">
+    <div class="modal" style="max-width: 700px;">
+      <div class="modal-header">
+        <h2 class="modal-title" id="view-customer-title">Thông tin khách hàng</h2>
+        <button class="modal-close" data-modal-close aria-label="Đóng">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+      </div>
+      <div class="modal-body" id="view-customer-content"></div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-modal-close>Đóng</button>
+        <button type="button" class="btn btn-primary" id="btn-edit-from-view">Chỉnh sửa</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast-container" class="toast-container"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+  <script src="assets/js/api.js"></script>
+  <script src="assets/js/sidebar.js"></script>
+  <script src="assets/js/main.js"></script>
+  <script src="assets/js/pages/customers.js"></script>
+</body>
+</html>

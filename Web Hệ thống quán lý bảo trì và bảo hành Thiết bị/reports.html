@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="vi" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Thống kê báo cáo doanh thu dịch vụ - Hệ thống quản lý Bảo Trì và Bảo Hành Thiết Bị">
+  <title>Báo cáo & Thống kê - Hệ thống Quản lý Bảo Trì & Bảo Hành</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔧</text></svg>">
+</head>
+<body data-page="reports" data-title="Báo cáo & Thống kê">
+
+  <!-- Sidebar & Header injected by sidebar.js -->
+
+  <main class="main-content" role="main">
+    <div class="page-content">
+
+      <!-- Date Range & Report Controls - Tương tự "Thống kê báo cáo doanh thu" -->
+      <div class="card mb-6">
+        <div class="card-body" style="padding: var(--space-4) var(--space-6);">
+          <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+            <div class="tabs" role="tablist" aria-label="Loại báo cáo">
+              <button class="tab-btn active" role="tab" data-report-tab="revenue" id="report-tab-revenue">Doanh thu</button>
+              <button class="tab-btn" role="tab" data-report-tab="services" id="report-tab-services">Dịch vụ</button>
+              <button class="tab-btn" role="tab" data-report-tab="inventory" id="report-tab-inventory">Tồn kho</button>
+              <button class="tab-btn" role="tab" data-report-tab="technicians" id="report-tab-technicians">Kỹ thuật viên</button>
+            </div>
+            <div class="flex gap-2 flex-wrap">
+              <select class="form-select" id="report-period" style="width:auto; min-width:160px;">
+                <option value="today">Hôm nay</option>
+                <option value="week">Tuần này</option>
+                <option value="month" selected>Tháng này</option>
+                <option value="quarter">Quý này</option>
+                <option value="year">Năm này</option>
+                <option value="custom">Tùy chỉnh</option>
+              </select>
+              <div id="custom-date-range" style="display:none; gap:8px;" class="flex">
+                <input type="date" class="form-input" id="report-date-from" style="width:auto;">
+                <input type="date" class="form-input" id="report-date-to" style="width:auto;">
+              </div>
+              <button class="btn btn-outline" id="btn-export-report">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                Xuất PDF
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Revenue Report Tab -->
+      <div id="tab-content-revenue">
+        <!-- Summary KPIs -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6" id="revenue-kpis">
+          <div class="stat-card">
+            <div class="stat-card-header">
+              <span class="stat-card-label">Tổng doanh thu</span>
+              <div class="stat-card-icon success"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg></div>
+            </div>
+            <div class="stat-card-value" id="kpi-revenue">—</div>
+            <div class="stat-card-change" id="kpi-revenue-change"></div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-card-header">
+              <span class="stat-card-label">Số phiếu hoàn thành</span>
+              <div class="stat-card-icon primary"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 11 12 14 22 4"></polyline><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg></div>
+            </div>
+            <div class="stat-card-value" id="kpi-completed">—</div>
+            <div class="stat-card-change" id="kpi-completed-change"></div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-card-header">
+              <span class="stat-card-label">Doanh thu TB/phiếu</span>
+              <div class="stat-card-icon info"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg></div>
+            </div>
+            <div class="stat-card-value" id="kpi-avg-ticket">—</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-card-header">
+              <span class="stat-card-label">Chi phí linh kiện</span>
+              <div class="stat-card-icon warning"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path></svg></div>
+            </div>
+            <div class="stat-card-value" id="kpi-parts-cost">—</div>
+          </div>
+        </div>
+
+        <!-- Revenue Chart -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
+          <div class="card lg:col-span-2">
+            <div class="card-header">
+              <div>
+                <h2 class="card-title">Biểu đồ doanh thu</h2>
+                <p class="card-subtitle">So sánh doanh thu theo thời gian</p>
+              </div>
+            </div>
+            <div class="card-body">
+              <div style="height: 280px; position: relative;">
+                <canvas id="revenueChart"></canvas>
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header">
+              <h2 class="card-title">Loại dịch vụ</h2>
+            </div>
+            <div class="card-body">
+              <div style="height: 280px; position: relative;">
+                <canvas id="serviceTypeChart"></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Top Services - "Sản phẩm bán chạy" nhưng là dịch vụ -->
+        <div class="card mb-6">
+          <div class="card-header">
+            <h2 class="card-title">Dịch vụ phổ biến nhất</h2>
+            <p class="card-subtitle">Top 10 loại dịch vụ được yêu cầu nhiều nhất</p>
+          </div>
+          <div class="card-body" id="top-services-container">
+            <div style="text-align:center; padding:var(--space-8);"><div class="spinner" style="margin:0 auto;"></div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Services Report Tab -->
+      <div id="tab-content-services" style="display:none;">
+        <div class="card mb-6">
+          <div class="card-header">
+            <h2 class="card-title">Phân tích phiếu dịch vụ</h2>
+          </div>
+          <div class="card-body">
+            <div style="height: 300px; position: relative;">
+              <canvas id="ticketStatusChart"></canvas>
+            </div>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <div class="card">
+            <div class="card-header"><h2 class="card-title">Thời gian xử lý trung bình</h2></div>
+            <div class="card-body" id="avg-time-container">
+              <div style="text-align:center;"><div class="spinner" style="margin:0 auto;"></div></div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header"><h2 class="card-title">Phiếu theo kỹ thuật viên</h2></div>
+            <div class="card-body" id="technician-tickets-container">
+              <div style="text-align:center;"><div class="spinner" style="margin:0 auto;"></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Inventory Report Tab - "Thống kê kho" -->
+      <div id="tab-content-inventory" style="display:none;">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+          <div class="card">
+            <div class="card-header"><h2 class="card-title">Linh kiện sắp hết tồn</h2></div>
+            <div class="card-body" id="low-stock-container">
+              <div style="text-align:center;"><div class="spinner" style="margin:0 auto;"></div></div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header"><h2 class="card-title">Linh kiện dùng nhiều nhất</h2></div>
+            <div class="card-body" id="top-parts-container">
+              <div style="text-align:center;"><div class="spinner" style="margin:0 auto;"></div></div>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header"><h2 class="card-title">Giá trị tồn kho theo danh mục</h2></div>
+          <div class="card-body">
+            <div style="height: 280px; position: relative;">
+              <canvas id="inventoryValueChart"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Technicians Report Tab - "Quản lý nhân viên" + hiệu suất -->
+      <div id="tab-content-technicians" style="display:none;">
+        <div class="card">
+          <div class="card-header">
+            <h2 class="card-title">Hiệu suất kỹ thuật viên</h2>
+            <p class="card-subtitle">Số phiếu hoàn thành và doanh thu theo kỹ thuật viên</p>
+          </div>
+          <div class="card-body" id="technician-performance-container">
+            <div style="text-align:center; padding:var(--space-8);"><div class="spinner" style="margin:0 auto;"></div></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <div id="toast-container" class="toast-container"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+  <script src="assets/js/api.js"></script>
+  <script src="assets/js/sidebar.js"></script>
+  <script src="assets/js/main.js"></script>
+  <script src="assets/js/pages/reports.js"></script>
+</body>
+</html>

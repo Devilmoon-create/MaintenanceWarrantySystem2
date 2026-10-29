@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="vi" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Tiếp nhận thiết bị và tạo phiếu dịch vụ - POS Bảo Trì">
+  <title>Tạo phiếu Dịch vụ - Hệ thống Quản lý Bảo Trì & Bảo Hành</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔧</text></svg>">
+</head>
+<body data-page="reception" data-title="Tạo phiếu Dịch vụ">
+  <main class="main-content" role="main">
+    <div class="page-content">
+      <!-- POS-style layout: split left (form) and right (summary) -->
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <!-- Left: Form -->
+        <div class="lg:col-span-2">
+          <!-- Tìm khách hàng -->
+          <div class="card mb-4">
+            <div class="card-header"><h2 class="card-title">1. Khách hàng</h2></div>
+            <div class="card-body">
+              <div style="position:relative;">
+                <svg style="position:absolute;left:12px;top:50%;transform:translateY(-50%);width:16px;height:16px;color:hsl(var(--color-text-muted));pointer-events:none;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                <input type="search" class="form-input" id="pos-customer-search" placeholder="Tìm khách hàng: tên, SĐT, email..." style="padding-left:38px;">
+              </div>
+              <div id="pos-customer-info" style="display:none;margin-top:var(--space-3);padding:var(--space-3);background:hsl(var(--color-bg));border-radius:var(--radius-md);"></div>
+            </div>
+          </div>
+          <!-- Tìm thiết bị -->
+          <div class="card mb-4">
+            <div class="card-header"><h2 class="card-title">2. Thiết bị cần dịch vụ</h2></div>
+            <div class="card-body">
+              <div style="position:relative;margin-bottom:var(--space-3);">
+                <svg style="position:absolute;left:12px;top:50%;transform:translateY(-50%);width:16px;height:16px;color:hsl(var(--color-text-muted));pointer-events:none;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                <input type="search" class="form-input" id="pos-device-search" placeholder="Tìm thiết bị: tên, mã, serial..." style="padding-left:38px;">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Mô tả sự cố <span class="required">*</span></label>
+                <textarea class="form-textarea" id="pos-issue" rows="3" placeholder="Mô tả chi tiết sự cố hoặc yêu cầu của khách..."></textarea>
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label class="form-label">Loại dịch vụ</label>
+                  <select class="form-select" id="pos-type"><option value="maintenance">Bảo trì</option><option value="warranty">Bảo hành</option><option value="repair">Sửa chữa</option><option value="inspection">Kiểm tra ĐK</option></select>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Độ ưu tiên</label>
+                  <select class="form-select" id="pos-priority"><option value="low">Thấp</option><option value="normal" selected>Bình thường</option><option value="high">Cao</option><option value="urgent">Khẩn cấp</option></select>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Dịch vụ & linh kiện -->
+          <div class="card mb-4">
+            <div class="card-header"><h2 class="card-title">3. Dịch vụ & Linh kiện</h2></div>
+            <div class="card-body">
+              <p style="color:hsl(var(--color-text-muted));font-size:var(--text-sm);margin-bottom:var(--space-3);">Thêm dịch vụ hoặc linh kiện cần sử dụng</p>
+              <div id="pos-items-list" style="margin-bottom:var(--space-3);"></div>
+              <div class="flex gap-2">
+                <button class="btn btn-outline btn-sm" id="pos-add-service"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg> Thêm dịch vụ</button>
+                <button class="btn btn-outline btn-sm" id="pos-add-part"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg> Thêm linh kiện</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Right: Summary -->
+        <div>
+          <div class="card" style="position:sticky;top:var(--space-4);">
+            <div class="card-header"><h2 class="card-title">Tổng kết phiếu</h2></div>
+            <div class="card-body">
+              <div style="margin-bottom:var(--space-4);">
+                <div style="display:flex;justify-content:space-between;margin-bottom:var(--space-2);"><span style="color:hsl(var(--color-text-muted));">Khách hàng:</span><strong id="pos-summary-customer">Chưa chọn</strong></div>
+                <div style="display:flex;justify-content:space-between;margin-bottom:var(--space-2);"><span style="color:hsl(var(--color-text-muted));">Thiết bị:</span><strong id="pos-summary-device">Chưa chọn</strong></div>
+                <div style="display:flex;justify-content:space-between;margin-bottom:var(--space-2);"><span style="color:hsl(var(--color-text-muted));">Loại DV:</span><strong id="pos-summary-type">Bảo trì</strong></div>
+              </div>
+              <div style="border-top:1px solid hsl(var(--color-border));padding-top:var(--space-4);margin-bottom:var(--space-4);">
+                <div style="display:flex;justify-content:space-between;margin-bottom:var(--space-2);"><span>Dịch vụ (0)</span><span id="pos-total-services">0 ₫</span></div>
+                <div style="display:flex;justify-content:space-between;margin-bottom:var(--space-2);"><span>Linh kiện (0)</span><span id="pos-total-parts">0 ₫</span></div>
+                <div style="display:flex;justify-content:space-between;font-size:var(--text-lg);font-weight:700;padding-top:var(--space-3);border-top:2px solid hsl(var(--color-border));"><span>TỔNG CỘNG</span><span style="color:hsl(var(--color-success));" id="pos-grand-total">0 ₫</span></div>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Kỹ thuật viên phụ trách</label>
+                <select class="form-select" id="pos-technician"><option value="">Chọn KTV</option><option>Trần Văn Kỹ</option><option>Lê Minh Thuật</option><option>Đặng Văn Viên</option></select>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Ghi chú nội bộ</label>
+                <textarea class="form-textarea" id="pos-notes" rows="2" placeholder="Ghi chú..."></textarea>
+              </div>
+              <button class="btn btn-primary w-full" id="pos-submit" style="padding:var(--space-4);font-size:var(--text-base);margin-top:var(--space-3);">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 11 12 14 22 4"></polyline><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>
+                Tạo phiếu dịch vụ
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+  <div id="toast-container" class="toast-container"></div>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+  <script src="assets/js/api.js"></script>
+  <script src="assets/js/sidebar.js"></script>
+  <script src="assets/js/main.js"></script>
+  <script>
+    // POS submit demo
+    document.getElementById('pos-submit')?.addEventListener('click', () => {
+      if (typeof App !== 'undefined') App.showToast('Đã tạo phiếu dịch vụ thành công! (Demo)', 'success');
+    });
+  </script>
+</body>
+</html>

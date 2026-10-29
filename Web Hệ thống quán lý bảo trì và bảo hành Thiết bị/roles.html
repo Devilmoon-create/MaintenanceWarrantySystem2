@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="vi" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Phân quyền Hệ thống - Hệ thống Quản lý Bảo Trì & Bảo Hành</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔧</text></svg>">
+</head>
+<body data-page="roles" data-title="Phân quyền Hệ thống">
+  <main class="main-content" role="main">
+    <div class="page-content">
+      <div class="card mb-6">
+        <div class="card-body" style="padding:var(--space-4) var(--space-6);">
+          <div class="flex items-center justify-between">
+            <h2 style="font-size:var(--text-lg);font-weight:700;">Vai trò & Quyền hạn</h2>
+            <button class="btn btn-primary" id="btn-add-role">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+              Thêm vai trò
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <!-- Admin role -->
+        <div class="card">
+          <div class="card-header">
+            <div><h3 class="card-title">Quản trị viên</h3><p class="card-subtitle">1 nhân viên</p></div>
+            <span class="badge badge-danger">Admin</span>
+          </div>
+          <div class="card-body">
+            <p style="font-size:var(--text-sm);color:hsl(var(--color-text-muted));margin-bottom:var(--space-3);">Toàn quyền truy cập và quản lý hệ thống</p>
+            <div style="display:flex;flex-wrap:wrap;gap:var(--space-1);">
+              <span class="badge badge-success" style="font-size:10px;">Dashboard</span>
+              <span class="badge badge-success" style="font-size:10px;">Thiết bị</span>
+              <span class="badge badge-success" style="font-size:10px;">Phiếu DV</span>
+              <span class="badge badge-success" style="font-size:10px;">Khách hàng</span>
+              <span class="badge badge-success" style="font-size:10px;">Kho LK</span>
+              <span class="badge badge-success" style="font-size:10px;">Nhân viên</span>
+              <span class="badge badge-success" style="font-size:10px;">Báo cáo</span>
+              <span class="badge badge-success" style="font-size:10px;">Cài đặt</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Manager role -->
+        <div class="card">
+          <div class="card-header">
+            <div><h3 class="card-title">Quản lý</h3><p class="card-subtitle">1 nhân viên</p></div>
+            <span class="badge badge-primary">Manager</span>
+          </div>
+          <div class="card-body">
+            <p style="font-size:var(--text-sm);color:hsl(var(--color-text-muted));margin-bottom:var(--space-3);">Quản lý nghiệp vụ, xem báo cáo, phê duyệt</p>
+            <div style="display:flex;flex-wrap:wrap;gap:var(--space-1);">
+              <span class="badge badge-success" style="font-size:10px;">Dashboard</span>
+              <span class="badge badge-success" style="font-size:10px;">Thiết bị</span>
+              <span class="badge badge-success" style="font-size:10px;">Phiếu DV</span>
+              <span class="badge badge-success" style="font-size:10px;">Khách hàng</span>
+              <span class="badge badge-success" style="font-size:10px;">Kho LK</span>
+              <span class="badge badge-success" style="font-size:10px;">Báo cáo</span>
+              <span class="badge badge-secondary" style="font-size:10px;">Nhân viên</span>
+              <span class="badge badge-secondary" style="font-size:10px;">Cài đặt</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Technician role -->
+        <div class="card">
+          <div class="card-header">
+            <div><h3 class="card-title">Kỹ thuật viên</h3><p class="card-subtitle">3 nhân viên</p></div>
+            <span class="badge badge-info">Technician</span>
+          </div>
+          <div class="card-body">
+            <p style="font-size:var(--text-sm);color:hsl(var(--color-text-muted));margin-bottom:var(--space-3);">Xử lý phiếu dịch vụ, cập nhật trạng thái</p>
+            <div style="display:flex;flex-wrap:wrap;gap:var(--space-1);">
+              <span class="badge badge-success" style="font-size:10px;">Dashboard</span>
+              <span class="badge badge-success" style="font-size:10px;">Thiết bị (xem)</span>
+              <span class="badge badge-success" style="font-size:10px;">Phiếu DV</span>
+              <span class="badge badge-success" style="font-size:10px;">Kho LK (xem)</span>
+              <span class="badge badge-secondary" style="font-size:10px;">Khách hàng</span>
+              <span class="badge badge-secondary" style="font-size:10px;">Báo cáo</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Receptionist role -->
+        <div class="card">
+          <div class="card-header">
+            <div><h3 class="card-title">Lễ tân / Tiếp nhận</h3><p class="card-subtitle">1 nhân viên</p></div>
+            <span class="badge badge-success">Receptionist</span>
+          </div>
+          <div class="card-body">
+            <p style="font-size:var(--text-sm);color:hsl(var(--color-text-muted));margin-bottom:var(--space-3);">Tiếp nhận khách, tạo phiếu, thanh toán</p>
+            <div style="display:flex;flex-wrap:wrap;gap:var(--space-1);">
+              <span class="badge badge-success" style="font-size:10px;">Tạo phiếu</span>
+              <span class="badge badge-success" style="font-size:10px;">Thanh toán</span>
+              <span class="badge badge-success" style="font-size:10px;">Khách hàng</span>
+              <span class="badge badge-success" style="font-size:10px;">Hoàn trả</span>
+              <span class="badge badge-secondary" style="font-size:10px;">Thiết bị</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Accountant role -->
+        <div class="card">
+          <div class="card-header">
+            <div><h3 class="card-title">Kế toán</h3><p class="card-subtitle">1 nhân viên</p></div>
+            <span class="badge badge-warning">Accountant</span>
+          </div>
+          <div class="card-body">
+            <p style="font-size:var(--text-sm);color:hsl(var(--color-text-muted));margin-bottom:var(--space-3);">Quản lý hóa đơn, thanh toán, báo cáo tài chính</p>
+            <div style="display:flex;flex-wrap:wrap;gap:var(--space-1);">
+              <span class="badge badge-success" style="font-size:10px;">Hóa đơn</span>
+              <span class="badge badge-success" style="font-size:10px;">Thanh toán</span>
+              <span class="badge badge-success" style="font-size:10px;">Báo cáo DT</span>
+              <span class="badge badge-success" style="font-size:10px;">Giá DV</span>
+              <span class="badge badge-success" style="font-size:10px;">NCC</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+  <div id="toast-container" class="toast-container"></div>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+  <script src="assets/js/api.js"></script>
+  <script src="assets/js/sidebar.js"></script>
+  <script src="assets/js/main.js"></script>
+</body>
+</html>
